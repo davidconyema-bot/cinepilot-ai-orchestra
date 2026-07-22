@@ -15,6 +15,7 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as CommandRouteImport } from './routes/command'
 import { Route as BudgetRouteImport } from './routes/budget'
+import { Route as ArchitectureRouteImport } from './routes/architecture'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -48,6 +49,11 @@ const BudgetRoute = BudgetRouteImport.update({
   path: '/budget',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArchitectureRoute = ArchitectureRouteImport.update({
+  id: '/architecture',
+  path: '/architecture',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AgentsRoute = AgentsRouteImport.update({
   id: '/agents',
   path: '/agents',
@@ -62,6 +68,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/architecture': typeof ArchitectureRoute
   '/budget': typeof BudgetRoute
   '/command': typeof CommandRoute
   '/notifications': typeof NotificationsRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/architecture': typeof ArchitectureRoute
   '/budget': typeof BudgetRoute
   '/command': typeof CommandRoute
   '/notifications': typeof NotificationsRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/architecture': typeof ArchitectureRoute
   '/budget': typeof BudgetRoute
   '/command': typeof CommandRoute
   '/notifications': typeof NotificationsRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/agents'
+    | '/architecture'
     | '/budget'
     | '/command'
     | '/notifications'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/agents'
+    | '/architecture'
     | '/budget'
     | '/command'
     | '/notifications'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/agents'
+    | '/architecture'
     | '/budget'
     | '/command'
     | '/notifications'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgentsRoute: typeof AgentsRoute
+  ArchitectureRoute: typeof ArchitectureRoute
   BudgetRoute: typeof BudgetRoute
   CommandRoute: typeof CommandRoute
   NotificationsRoute: typeof NotificationsRoute
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BudgetRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/architecture': {
+      id: '/architecture'
+      path: '/architecture'
+      fullPath: '/architecture'
+      preLoaderRoute: typeof ArchitectureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/agents': {
       id: '/agents'
       path: '/agents'
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgentsRoute: AgentsRoute,
+  ArchitectureRoute: ArchitectureRoute,
   BudgetRoute: BudgetRoute,
   CommandRoute: CommandRoute,
   NotificationsRoute: NotificationsRoute,
