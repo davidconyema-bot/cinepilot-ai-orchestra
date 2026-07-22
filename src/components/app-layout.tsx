@@ -13,6 +13,8 @@ import {
   Search,
   Cloud,
   Network,
+  Shield,
+
 } from "lucide-react";
 import { useState } from "react";
 import { CommandDock } from "@/components/command-dock";
