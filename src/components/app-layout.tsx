@@ -13,6 +13,8 @@ import {
   Search,
   Cloud,
   Network,
+  Shield,
+
 } from "lucide-react";
 import { useState } from "react";
 import { CommandDock } from "@/components/command-dock";
@@ -28,6 +30,7 @@ const nav = [
   { to: "/reports", label: "Reports", icon: FileText },
   { to: "/architecture", label: "Architecture", icon: Network },
   { to: "/notifications", label: "Notifications", icon: Bell },
+  { to: "/admin", label: "Admin", icon: Shield },
 ] as const;
 
 export function AppLayout() {
