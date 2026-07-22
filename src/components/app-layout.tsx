@@ -12,6 +12,7 @@ import {
   Film,
   Search,
   Cloud,
+  Network,
 } from "lucide-react";
 import { useState } from "react";
 import { CommandDock } from "@/components/command-dock";
@@ -25,6 +26,7 @@ const nav = [
   { to: "/schedule", label: "Schedule", icon: CalendarDays },
   { to: "/budget", label: "Budget", icon: Wallet },
   { to: "/reports", label: "Reports", icon: FileText },
+  { to: "/architecture", label: "Architecture", icon: Network },
   { to: "/notifications", label: "Notifications", icon: Bell },
 ] as const;
 
