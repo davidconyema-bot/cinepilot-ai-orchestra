@@ -133,9 +133,13 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 import { AppLayout } from "@/components/app-layout";
+import { initFirestoreSync } from "@/lib/store";
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => {
+    initFirestoreSync();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
