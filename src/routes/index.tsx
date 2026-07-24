@@ -2,8 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Activity, Bot, Wallet, Users, CalendarDays, Film } from "lucide-react";
 import {
-  Area,
-  AreaChart,
   CartesianGrid,
   Cell,
   Pie,
