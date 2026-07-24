@@ -272,10 +272,6 @@ function Dashboard() {
         )}
       </SectionCard>
 
-      {/* Spacer for old imports referenced by TS */}
-      <div className="hidden">
-        <AreaChart data={[]} />
-      </div>
     </>
   );
 }
