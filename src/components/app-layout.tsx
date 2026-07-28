@@ -161,9 +161,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
 
           {/* Mobile nav */}
           <div className="lg:hidden flex overflow-x-auto gap-1 px-2 py-2 border-b border-border/40">
-            {nav.map((item) => {
-              const active =
-                item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+            {visibleNav.map((item) => {
+              const active = pathname.startsWith(item.to);
+
               const Icon = item.icon;
               return (
                 <Link
