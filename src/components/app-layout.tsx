@@ -80,9 +80,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
           </div>
 
           <nav className="flex-1 space-y-1 px-3 py-4">
-            {nav.map((item) => {
-              const active =
-                item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+            {visibleNav.map((item) => {
+              const active = pathname.startsWith(item.to);
+
               const Icon = item.icon;
               return (
                 <Link
