@@ -5,7 +5,7 @@ import { PageHeader, SectionCard } from "@/components/section-card";
 import { useStore, timeAgo } from "@/lib/store";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/reports")({
+export const Route = createFileRoute("/_authenticated/reports")({
   component: Reports,
   head: () => ({
     meta: [

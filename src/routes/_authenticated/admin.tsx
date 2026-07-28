@@ -8,7 +8,7 @@ import { adminLogin, adminLogout, isAdminAuthed, ADMIN_EMAIL } from "@/lib/admin
 import { agents, agentActivity } from "@/lib/mock-data";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/admin")({
+export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminPage,
   head: () => ({
     meta: [

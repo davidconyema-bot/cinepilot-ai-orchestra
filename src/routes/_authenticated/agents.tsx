@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { agents } from "@/lib/mock-data";
 import { useStore, timeAgo } from "@/lib/store";
 
-export const Route = createFileRoute("/agents")({
+export const Route = createFileRoute("/_authenticated/agents")({
   component: AgentCenter,
   head: () => ({
     meta: [

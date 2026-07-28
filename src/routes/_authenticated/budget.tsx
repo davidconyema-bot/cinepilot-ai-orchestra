@@ -21,7 +21,7 @@ import { BudgetItemDialog } from "@/components/budget-item-dialog";
 import { useStore, type BudgetItem } from "@/lib/store";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/budget")({
+export const Route = createFileRoute("/_authenticated/budget")({
   component: Budget,
   head: () => ({
     meta: [

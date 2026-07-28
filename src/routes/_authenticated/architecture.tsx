@@ -21,7 +21,7 @@ import {
 import { PageHeader, SectionCard } from "@/components/section-card";
 import { Badge } from "@/components/ui/badge";
 
-export const Route = createFileRoute("/architecture")({
+export const Route = createFileRoute("/_authenticated/architecture")({
   component: ArchitecturePage,
   head: () => ({
     meta: [

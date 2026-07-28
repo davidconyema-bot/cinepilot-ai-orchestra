@@ -12,7 +12,7 @@ import { ScriptUploadDialog } from "@/components/script-upload-dialog";
 import { firebaseEnabled } from "@/lib/firebase";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/projects")({
+export const Route = createFileRoute("/_authenticated/projects")({
   component: Projects,
   head: () => ({
     meta: [
