@@ -1,11 +1,19 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Lock, LogOut, Shield, Users, Activity, Database, AlertTriangle } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Shield, Users, Activity, Database, ShieldAlert, Loader2 } from "lucide-react";
 import { PageHeader, SectionCard } from "@/components/section-card";
 import { Badge } from "@/components/ui/badge";
-import { adminLogin, adminLogout, isAdminAuthed, ADMIN_EMAIL } from "@/lib/admin-auth";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { agents, agentActivity } from "@/lib/mock-data";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth, ALL_ROLES, ROLE_LABELS, type AppRole } from "@/lib/auth";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -19,112 +27,87 @@ export const Route = createFileRoute("/_authenticated/admin")({
   }),
 });
 
-function AdminPage() {
-  const [authed, setAuthed] = useState(false);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setAuthed(isAdminAuthed());
-    setReady(true);
-  }, []);
-
-  if (!ready) return null;
-  if (!authed) return <LoginForm onSuccess={() => setAuthed(true)} />;
-  return <AdminDashboard onLogout={() => setAuthed(false)} />;
+interface MemberRow {
+  id: string;
+  email: string | null;
+  full_name: string | null;
+  job_title: string | null;
+  roles: AppRole[];
 }
 
-function LoginForm({ onSuccess }: { onSuccess: () => void }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [err, setErr] = useState("");
+function AdminPage() {
+  const { hasRole, loading, user } = useAuth();
+  const [members, setMembers] = useState<MemberRow[]>([]);
+  const [fetching, setFetching] = useState(true);
 
-  function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (adminLogin(email, password)) {
-      toast.success("Welcome, admin");
-      onSuccess();
-    } else {
-      setErr("Invalid email or password");
-    }
+  const load = useCallback(async () => {
+    setFetching(true);
+    const [{ data: profiles }, { data: roleRows }] = await Promise.all([
+      supabase.from("profiles").select("id, email, full_name, job_title"),
+      supabase.from("user_roles").select("user_id, role"),
+    ]);
+    const byUser = new Map<string, AppRole[]>();
+    ((roleRows ?? []) as { user_id: string; role: AppRole }[]).forEach((r) => {
+      byUser.set(r.user_id, [...(byUser.get(r.user_id) ?? []), r.role]);
+    });
+    setMembers(
+      ((profiles ?? []) as Omit<MemberRow, "roles">[]).map((p) => ({
+        ...p,
+        roles: byUser.get(p.id) ?? [],
+      })),
+    );
+    setFetching(false);
+  }, []);
+
+  useEffect(() => {
+    if (!loading && hasRole("producer")) void load();
+  }, [loading, hasRole, load]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Loader2 className="h-4 w-4 animate-spin" /> Checking permissions…
+      </div>
+    );
   }
 
-  return (
-    <div className="mx-auto max-w-md">
+  if (!hasRole("producer")) {
+    return (
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass rounded-2xl p-6"
+        className="mx-auto max-w-md glass rounded-2xl p-6 text-center"
       >
-        <div className="flex items-center gap-3 mb-5">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/20">
-            <Shield className="h-5 w-5 text-primary" />
-          </div>
-          <div>
-            <h1 className="font-display text-xl font-semibold">Admin Console</h1>
-            <p className="text-xs text-muted-foreground">Restricted access</p>
-          </div>
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-destructive/15">
+          <ShieldAlert className="h-6 w-6 text-destructive" />
         </div>
-
-        <form onSubmit={onSubmit} className="space-y-3">
-          <div>
-            <label className="text-xs text-muted-foreground">Email</label>
-            <input
-              type="email"
-              autoComplete="username"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full h-10 rounded-lg border border-border/60 bg-white/5 px-3 text-sm outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20"
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-          <div>
-            <label className="text-xs text-muted-foreground">Password</label>
-            <input
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full h-10 rounded-lg border border-border/60 bg-white/5 px-3 text-sm outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20"
-              placeholder="••••••••"
-              required
-            />
-          </div>
-          {err && (
-            <div className="flex items-center gap-2 rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-xs text-destructive">
-              <AlertTriangle className="h-3.5 w-3.5" />
-              {err}
-            </div>
-          )}
-          <button
-            type="submit"
-            className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-          >
-            <Lock className="h-4 w-4" />
-            Sign in
-          </button>
-        </form>
-
-        <p className="mt-4 text-[10px] text-muted-foreground">
-          Demo gate. Client-side only — enable Lovable Cloud for real authentication.
+        <h1 className="mt-4 font-display text-xl font-semibold">Producer access required</h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Your account doesn't have the Producer role. Ask a producer on your production to grant
+          you access from the admin console.
         </p>
       </motion.div>
-    </div>
-  );
-}
+    );
+  }
 
-function AdminDashboard({ onLogout }: { onLogout: () => void }) {
-  const navigate = useNavigate();
-  function signOut() {
-    adminLogout();
-    toast.success("Signed out");
-    onLogout();
-    navigate({ to: "/admin" });
+  async function setRole(userId: string, role: AppRole) {
+    const { error: delError } = await supabase.from("user_roles").delete().eq("user_id", userId);
+    if (delError) {
+      toast.error(delError.message);
+      return;
+    }
+    const { error } = await supabase.from("user_roles").insert({ user_id: userId, role });
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(`Role updated to ${ROLE_LABELS[role]}`);
+    void load();
   }
 
   const stats = [
+    { label: "Team members", value: members.length, icon: Users },
     { label: "Active agents", value: agents.filter((a) => a.status === "active").length, icon: Activity },
-    { label: "Total agents", value: agents.length, icon: Users },
     { label: "Recent events", value: agentActivity.length, icon: Database },
   ];
 
@@ -132,20 +115,11 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
     <>
       <PageHeader
         title="Admin Console"
-        subtitle={`Signed in as ${ADMIN_EMAIL}`}
+        subtitle="Manage team access, roles and system activity"
         action={
-          <div className="flex items-center gap-2">
-            <Badge className="gap-1.5 bg-primary/20 text-primary border-primary/30">
-              <Shield className="h-3 w-3" /> Admin
-            </Badge>
-            <button
-              onClick={signOut}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-border/60 bg-white/5 px-3 py-1.5 text-xs hover:bg-white/10"
-            >
-              <LogOut className="h-3.5 w-3.5" />
-              Sign out
-            </button>
-          </div>
+          <Badge className="gap-1.5 bg-primary/20 text-primary border-primary/30">
+            <Shield className="h-3 w-3" /> Producer
+          </Badge>
         }
       />
 
@@ -167,22 +141,53 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <SectionCard title="Users" subtitle="Registered accounts">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between rounded-lg border border-border/40 bg-white/5 px-3 py-2 text-sm">
-              <div>
-                <div className="font-medium">David Conyema</div>
-                <div className="text-xs text-muted-foreground">{ADMIN_EMAIL}</div>
-              </div>
-              <Badge variant="outline" className="border-primary/40 text-primary">
-                admin
-              </Badge>
+        <SectionCard title="Team members" subtitle="Accounts and production roles">
+          {fetching ? (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Loader2 className="h-4 w-4 animate-spin" /> Loading team…
             </div>
-          </div>
+          ) : (
+            <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
+              {members.map((m) => (
+                <div
+                  key={m.id}
+                  className="flex items-center gap-3 rounded-lg border border-border/40 bg-white/5 px-3 py-2 text-sm"
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="font-medium truncate">
+                      {m.full_name || m.email || "Unnamed"}
+                      {m.id === user?.id && (
+                        <span className="ml-2 text-[10px] text-muted-foreground">you</span>
+                      )}
+                    </div>
+                    <div className="text-xs text-muted-foreground truncate">{m.email}</div>
+                  </div>
+                  <Select
+                    value={m.roles[0] ?? undefined}
+                    onValueChange={(v) => setRole(m.id, v as AppRole)}
+                  >
+                    <SelectTrigger className="h-8 w-44 text-xs">
+                      <SelectValue placeholder="No role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {ALL_ROLES.map((r) => (
+                        <SelectItem key={r} value={r}>
+                          {ROLE_LABELS[r]}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ))}
+              {!members.length && (
+                <p className="text-sm text-muted-foreground">No team members yet.</p>
+              )}
+            </div>
+          )}
         </SectionCard>
 
         <SectionCard title="Agent roster" subtitle="Manage specialist agents">
-          <div className="space-y-1.5 max-h-64 overflow-y-auto pr-1">
+          <div className="space-y-1.5 max-h-80 overflow-y-auto pr-1">
             {agents.map((a) => (
               <div
                 key={a.id}
@@ -190,7 +195,10 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
               >
                 <span>{a.emoji}</span>
                 <span className="flex-1">{a.name}</span>
-                <Badge variant="outline" className="text-[10px] border-border/60 text-muted-foreground">
+                <Badge
+                  variant="outline"
+                  className="text-[10px] border-border/60 text-muted-foreground"
+                >
                   {a.status}
                 </Badge>
               </div>
