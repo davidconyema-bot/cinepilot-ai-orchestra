@@ -157,7 +157,27 @@ export function AppLayout({ children }: { children: ReactNode }) {
               Ask CinePilot
               <kbd className="ml-1 rounded bg-white/10 px-1.5 py-0.5 text-[10px]">⌘K</kbd>
             </button>
+
+            <div className="flex items-center gap-2 pl-1">
+              <div className="hidden sm:flex flex-col items-end leading-tight">
+                <span className="text-xs font-medium">{displayName(profile, user)}</span>
+                <span className="text-[10px] text-muted-foreground">
+                  {roles.length ? roles.map((r) => ROLE_LABELS[r]).join(" · ") : "No role"}
+                </span>
+              </div>
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xs font-semibold text-primary-foreground">
+                {displayName(profile, user).charAt(0).toUpperCase()}
+              </div>
+              <button
+                onClick={signOut}
+                title="Sign out"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-border/60 bg-white/5 text-muted-foreground hover:text-foreground hover:bg-white/10"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+              </button>
+            </div>
           </div>
+
 
           {/* Mobile nav */}
           <div className="lg:hidden flex overflow-x-auto gap-1 px-2 py-2 border-b border-border/40">
