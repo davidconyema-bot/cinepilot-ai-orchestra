@@ -189,7 +189,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
             transition={{ duration: 0.25 }}
             className="p-4 md:p-8"
           >
-            <Outlet />
+            {children}
           </motion.div>
         </main>
       </div>
