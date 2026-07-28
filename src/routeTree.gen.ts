@@ -9,243 +9,245 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ScheduleRouteImport } from './routes/schedule'
-import { Route as ReportsRouteImport } from './routes/reports'
-import { Route as ProjectsRouteImport } from './routes/projects'
-import { Route as NotificationsRouteImport } from './routes/notifications'
-import { Route as CommandRouteImport } from './routes/command'
-import { Route as BudgetRouteImport } from './routes/budget'
-import { Route as ArchitectureRouteImport } from './routes/architecture'
-import { Route as AgentsRouteImport } from './routes/agents'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedScheduleRouteImport } from './routes/_authenticated/schedule'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
+import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedCommandRouteImport } from './routes/_authenticated/command'
+import { Route as AuthenticatedBudgetRouteImport } from './routes/_authenticated/budget'
+import { Route as AuthenticatedArchitectureRouteImport } from './routes/_authenticated/architecture'
+import { Route as AuthenticatedAgentsRouteImport } from './routes/_authenticated/agents'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
-const ScheduleRoute = ScheduleRouteImport.update({
-  id: '/schedule',
+const AuthenticatedScheduleRoute = AuthenticatedScheduleRouteImport.update({
+  id: '/_authenticated/schedule',
   path: '/schedule',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReportsRoute = ReportsRouteImport.update({
-  id: '/reports',
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/_authenticated/reports',
   path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectsRoute = ProjectsRouteImport.update({
-  id: '/projects',
+const AuthenticatedProjectsRoute = AuthenticatedProjectsRouteImport.update({
+  id: '/_authenticated/projects',
   path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NotificationsRoute = NotificationsRouteImport.update({
-  id: '/notifications',
-  path: '/notifications',
+const AuthenticatedNotificationsRoute =
+  AuthenticatedNotificationsRouteImport.update({
+    id: '/_authenticated/notifications',
+    path: '/notifications',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/_authenticated/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CommandRoute = CommandRouteImport.update({
-  id: '/command',
+const AuthenticatedCommandRoute = AuthenticatedCommandRouteImport.update({
+  id: '/_authenticated/command',
   path: '/command',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BudgetRoute = BudgetRouteImport.update({
-  id: '/budget',
+const AuthenticatedBudgetRoute = AuthenticatedBudgetRouteImport.update({
+  id: '/_authenticated/budget',
   path: '/budget',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ArchitectureRoute = ArchitectureRouteImport.update({
-  id: '/architecture',
-  path: '/architecture',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AgentsRoute = AgentsRouteImport.update({
-  id: '/agents',
+const AuthenticatedArchitectureRoute =
+  AuthenticatedArchitectureRouteImport.update({
+    id: '/_authenticated/architecture',
+    path: '/architecture',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticatedAgentsRoute = AuthenticatedAgentsRouteImport.update({
+  id: '/_authenticated/agents',
   path: '/agents',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/_authenticated/admin',
   path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
-  '/agents': typeof AgentsRoute
-  '/architecture': typeof ArchitectureRoute
-  '/budget': typeof BudgetRoute
-  '/command': typeof CommandRoute
-  '/notifications': typeof NotificationsRoute
-  '/projects': typeof ProjectsRoute
-  '/reports': typeof ReportsRoute
-  '/schedule': typeof ScheduleRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/agents': typeof AuthenticatedAgentsRoute
+  '/architecture': typeof AuthenticatedArchitectureRoute
+  '/budget': typeof AuthenticatedBudgetRoute
+  '/command': typeof AuthenticatedCommandRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
+  '/projects': typeof AuthenticatedProjectsRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/schedule': typeof AuthenticatedScheduleRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
-  '/agents': typeof AgentsRoute
-  '/architecture': typeof ArchitectureRoute
-  '/budget': typeof BudgetRoute
-  '/command': typeof CommandRoute
-  '/notifications': typeof NotificationsRoute
-  '/projects': typeof ProjectsRoute
-  '/reports': typeof ReportsRoute
-  '/schedule': typeof ScheduleRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/agents': typeof AuthenticatedAgentsRoute
+  '/architecture': typeof AuthenticatedArchitectureRoute
+  '/budget': typeof AuthenticatedBudgetRoute
+  '/command': typeof AuthenticatedCommandRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
+  '/projects': typeof AuthenticatedProjectsRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/schedule': typeof AuthenticatedScheduleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
-  '/agents': typeof AgentsRoute
-  '/architecture': typeof ArchitectureRoute
-  '/budget': typeof BudgetRoute
-  '/command': typeof CommandRoute
-  '/notifications': typeof NotificationsRoute
-  '/projects': typeof ProjectsRoute
-  '/reports': typeof ReportsRoute
-  '/schedule': typeof ScheduleRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/agents': typeof AuthenticatedAgentsRoute
+  '/_authenticated/architecture': typeof AuthenticatedArchitectureRoute
+  '/_authenticated/budget': typeof AuthenticatedBudgetRoute
+  '/_authenticated/command': typeof AuthenticatedCommandRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/projects': typeof AuthenticatedProjectsRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/_authenticated/schedule': typeof AuthenticatedScheduleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/admin'
     | '/agents'
     | '/architecture'
     | '/budget'
     | '/command'
+    | '/dashboard'
     | '/notifications'
     | '/projects'
     | '/reports'
     | '/schedule'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/admin'
     | '/agents'
     | '/architecture'
     | '/budget'
     | '/command'
+    | '/dashboard'
     | '/notifications'
     | '/projects'
     | '/reports'
     | '/schedule'
   id:
     | '__root__'
-    | '/'
-    | '/admin'
-    | '/agents'
-    | '/architecture'
-    | '/budget'
-    | '/command'
-    | '/notifications'
-    | '/projects'
-    | '/reports'
-    | '/schedule'
+    | '/_authenticated/admin'
+    | '/_authenticated/agents'
+    | '/_authenticated/architecture'
+    | '/_authenticated/budget'
+    | '/_authenticated/command'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/notifications'
+    | '/_authenticated/projects'
+    | '/_authenticated/reports'
+    | '/_authenticated/schedule'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
-  AgentsRoute: typeof AgentsRoute
-  ArchitectureRoute: typeof ArchitectureRoute
-  BudgetRoute: typeof BudgetRoute
-  CommandRoute: typeof CommandRoute
-  NotificationsRoute: typeof NotificationsRoute
-  ProjectsRoute: typeof ProjectsRoute
-  ReportsRoute: typeof ReportsRoute
-  ScheduleRoute: typeof ScheduleRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAgentsRoute: typeof AuthenticatedAgentsRoute
+  AuthenticatedArchitectureRoute: typeof AuthenticatedArchitectureRoute
+  AuthenticatedBudgetRoute: typeof AuthenticatedBudgetRoute
+  AuthenticatedCommandRoute: typeof AuthenticatedCommandRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
+  AuthenticatedScheduleRoute: typeof AuthenticatedScheduleRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/schedule': {
-      id: '/schedule'
+    '/_authenticated/schedule': {
+      id: '/_authenticated/schedule'
       path: '/schedule'
       fullPath: '/schedule'
-      preLoaderRoute: typeof ScheduleRouteImport
+      preLoaderRoute: typeof AuthenticatedScheduleRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reports': {
-      id: '/reports'
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
       path: '/reports'
       fullPath: '/reports'
-      preLoaderRoute: typeof ReportsRouteImport
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/projects': {
-      id: '/projects'
+    '/_authenticated/projects': {
+      id: '/_authenticated/projects'
       path: '/projects'
       fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsRouteImport
+      preLoaderRoute: typeof AuthenticatedProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/notifications': {
-      id: '/notifications'
+    '/_authenticated/notifications': {
+      id: '/_authenticated/notifications'
       path: '/notifications'
       fullPath: '/notifications'
-      preLoaderRoute: typeof NotificationsRouteImport
+      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/command': {
-      id: '/command'
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/command': {
+      id: '/_authenticated/command'
       path: '/command'
       fullPath: '/command'
-      preLoaderRoute: typeof CommandRouteImport
+      preLoaderRoute: typeof AuthenticatedCommandRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/budget': {
-      id: '/budget'
+    '/_authenticated/budget': {
+      id: '/_authenticated/budget'
       path: '/budget'
       fullPath: '/budget'
-      preLoaderRoute: typeof BudgetRouteImport
+      preLoaderRoute: typeof AuthenticatedBudgetRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/architecture': {
-      id: '/architecture'
+    '/_authenticated/architecture': {
+      id: '/_authenticated/architecture'
       path: '/architecture'
       fullPath: '/architecture'
-      preLoaderRoute: typeof ArchitectureRouteImport
+      preLoaderRoute: typeof AuthenticatedArchitectureRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/agents': {
-      id: '/agents'
+    '/_authenticated/agents': {
+      id: '/_authenticated/agents'
       path: '/agents'
       fullPath: '/agents'
-      preLoaderRoute: typeof AgentsRouteImport
+      preLoaderRoute: typeof AuthenticatedAgentsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin': {
-      id: '/admin'
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
       path: '/admin'
       fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
-  AgentsRoute: AgentsRoute,
-  ArchitectureRoute: ArchitectureRoute,
-  BudgetRoute: BudgetRoute,
-  CommandRoute: CommandRoute,
-  NotificationsRoute: NotificationsRoute,
-  ProjectsRoute: ProjectsRoute,
-  ReportsRoute: ReportsRoute,
-  ScheduleRoute: ScheduleRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAgentsRoute: AuthenticatedAgentsRoute,
+  AuthenticatedArchitectureRoute: AuthenticatedArchitectureRoute,
+  AuthenticatedBudgetRoute: AuthenticatedBudgetRoute,
+  AuthenticatedCommandRoute: AuthenticatedCommandRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedProjectsRoute: AuthenticatedProjectsRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
+  AuthenticatedScheduleRoute: AuthenticatedScheduleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
