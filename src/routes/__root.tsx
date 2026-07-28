@@ -132,19 +132,34 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-import { AppLayout } from "@/components/app-layout";
 import { initFirestoreSync } from "@/lib/store";
+import { AuthProvider } from "@/lib/auth";
+import { supabase } from "@/integrations/supabase/client";
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
   useEffect(() => {
     initFirestoreSync();
   }, []);
 
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      router.invalidate();
+      if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [router, queryClient]);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <AppLayout />
+      <AuthProvider>
+        <Outlet />
+      </AuthProvider>
       <Toaster theme="dark" position="top-right" />
     </QueryClientProvider>
   );
 }
+

@@ -9,7 +9,7 @@ import { ShootDayDialog } from "@/components/shoot-day-dialog";
 import { useStore, type ShootDay } from "@/lib/store";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/schedule")({
+export const Route = createFileRoute("/_authenticated/schedule")({
   component: Schedule,
   head: () => ({
     meta: [

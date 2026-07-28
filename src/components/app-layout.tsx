@@ -1,4 +1,4 @@
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
   LayoutDashboard,
@@ -14,14 +14,18 @@ import {
   Cloud,
   Network,
   Shield,
-
+  LogOut,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { CommandDock } from "@/components/command-dock";
 import { Badge } from "@/components/ui/badge";
+import { useAuth, displayName, ROLE_LABELS } from "@/lib/auth";
+import { supabase } from "@/integrations/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const nav = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/projects", label: "Projects", icon: FolderKanban },
   { to: "/agents", label: "Agent Center", icon: Bot },
   { to: "/command", label: "AI Command", icon: Sparkles },
@@ -30,12 +34,26 @@ const nav = [
   { to: "/reports", label: "Reports", icon: FileText },
   { to: "/architecture", label: "Architecture", icon: Network },
   { to: "/notifications", label: "Notifications", icon: Bell },
-  { to: "/admin", label: "Admin", icon: Shield },
+  { to: "/admin", label: "Admin", icon: Shield, producerOnly: true },
 ] as const;
 
-export function AppLayout() {
+export function AppLayout({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [dockOpen, setDockOpen] = useState(false);
+  const { user, profile, roles, hasRole } = useAuth();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const visibleNav = nav.filter((item) => !("producerOnly" in item) || hasRole("producer"));
+
+  async function signOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    toast.success("Signed out");
+    navigate({ to: "/auth", replace: true });
+  }
+
 
   return (
     <div className="relative min-h-screen">
@@ -62,9 +80,9 @@ export function AppLayout() {
           </div>
 
           <nav className="flex-1 space-y-1 px-3 py-4">
-            {nav.map((item) => {
-              const active =
-                item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+            {visibleNav.map((item) => {
+              const active = pathname.startsWith(item.to);
+
               const Icon = item.icon;
               return (
                 <Link
@@ -139,13 +157,33 @@ export function AppLayout() {
               Ask CinePilot
               <kbd className="ml-1 rounded bg-white/10 px-1.5 py-0.5 text-[10px]">⌘K</kbd>
             </button>
+
+            <div className="flex items-center gap-2 pl-1">
+              <div className="hidden sm:flex flex-col items-end leading-tight">
+                <span className="text-xs font-medium">{displayName(profile, user)}</span>
+                <span className="text-[10px] text-muted-foreground">
+                  {roles.length ? roles.map((r) => ROLE_LABELS[r]).join(" · ") : "No role"}
+                </span>
+              </div>
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xs font-semibold text-primary-foreground">
+                {displayName(profile, user).charAt(0).toUpperCase()}
+              </div>
+              <button
+                onClick={signOut}
+                title="Sign out"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-border/60 bg-white/5 text-muted-foreground hover:text-foreground hover:bg-white/10"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+              </button>
+            </div>
           </div>
+
 
           {/* Mobile nav */}
           <div className="lg:hidden flex overflow-x-auto gap-1 px-2 py-2 border-b border-border/40">
-            {nav.map((item) => {
-              const active =
-                item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+            {visibleNav.map((item) => {
+              const active = pathname.startsWith(item.to);
+
               const Icon = item.icon;
               return (
                 <Link
@@ -171,7 +209,7 @@ export function AppLayout() {
             transition={{ duration: 0.25 }}
             className="p-4 md:p-8"
           >
-            <Outlet />
+            {children}
           </motion.div>
         </main>
       </div>

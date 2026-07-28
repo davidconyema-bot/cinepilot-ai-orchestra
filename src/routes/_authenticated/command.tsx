@@ -7,7 +7,7 @@ import { agents } from "@/lib/mock-data";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 
-export const Route = createFileRoute("/command")({
+export const Route = createFileRoute("/_authenticated/command")({
   component: CommandCenter,
   head: () => ({
     meta: [
