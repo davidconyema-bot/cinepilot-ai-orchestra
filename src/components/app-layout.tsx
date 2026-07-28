@@ -1,4 +1,4 @@
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
   LayoutDashboard,
@@ -14,14 +14,18 @@ import {
   Cloud,
   Network,
   Shield,
-
+  LogOut,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { CommandDock } from "@/components/command-dock";
 import { Badge } from "@/components/ui/badge";
+import { useAuth, displayName, ROLE_LABELS } from "@/lib/auth";
+import { supabase } from "@/integrations/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const nav = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/projects", label: "Projects", icon: FolderKanban },
   { to: "/agents", label: "Agent Center", icon: Bot },
   { to: "/command", label: "AI Command", icon: Sparkles },
@@ -30,12 +34,26 @@ const nav = [
   { to: "/reports", label: "Reports", icon: FileText },
   { to: "/architecture", label: "Architecture", icon: Network },
   { to: "/notifications", label: "Notifications", icon: Bell },
-  { to: "/admin", label: "Admin", icon: Shield },
+  { to: "/admin", label: "Admin", icon: Shield, producerOnly: true },
 ] as const;
 
-export function AppLayout() {
+export function AppLayout({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [dockOpen, setDockOpen] = useState(false);
+  const { user, profile, roles, hasRole } = useAuth();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const visibleNav = nav.filter((item) => !("producerOnly" in item) || hasRole("producer"));
+
+  async function signOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    toast.success("Signed out");
+    navigate({ to: "/auth", replace: true });
+  }
+
 
   return (
     <div className="relative min-h-screen">
