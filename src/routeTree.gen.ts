@@ -18,6 +18,7 @@ import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCommandRouteImport } from './routes/_authenticated/command'
+import { Route as AuthenticatedCollaborationRouteImport } from './routes/_authenticated/collaboration'
 import { Route as AuthenticatedBudgetRouteImport } from './routes/_authenticated/budget'
 import { Route as AuthenticatedArchitectureRouteImport } from './routes/_authenticated/architecture'
 import { Route as AuthenticatedAgentsRouteImport } from './routes/_authenticated/agents'
@@ -68,6 +69,12 @@ const AuthenticatedCommandRoute = AuthenticatedCommandRouteImport.update({
   path: '/command',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCollaborationRoute =
+  AuthenticatedCollaborationRouteImport.update({
+    id: '/collaboration',
+    path: '/collaboration',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedBudgetRoute = AuthenticatedBudgetRouteImport.update({
   id: '/budget',
   path: '/budget',
@@ -97,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/agents': typeof AuthenticatedAgentsRoute
   '/architecture': typeof AuthenticatedArchitectureRoute
   '/budget': typeof AuthenticatedBudgetRoute
+  '/collaboration': typeof AuthenticatedCollaborationRoute
   '/command': typeof AuthenticatedCommandRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
@@ -111,6 +119,7 @@ export interface FileRoutesByTo {
   '/agents': typeof AuthenticatedAgentsRoute
   '/architecture': typeof AuthenticatedArchitectureRoute
   '/budget': typeof AuthenticatedBudgetRoute
+  '/collaboration': typeof AuthenticatedCollaborationRoute
   '/command': typeof AuthenticatedCommandRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
@@ -127,6 +136,7 @@ export interface FileRoutesById {
   '/_authenticated/agents': typeof AuthenticatedAgentsRoute
   '/_authenticated/architecture': typeof AuthenticatedArchitectureRoute
   '/_authenticated/budget': typeof AuthenticatedBudgetRoute
+  '/_authenticated/collaboration': typeof AuthenticatedCollaborationRoute
   '/_authenticated/command': typeof AuthenticatedCommandRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/agents'
     | '/architecture'
     | '/budget'
+    | '/collaboration'
     | '/command'
     | '/dashboard'
     | '/notifications'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/agents'
     | '/architecture'
     | '/budget'
+    | '/collaboration'
     | '/command'
     | '/dashboard'
     | '/notifications'
@@ -172,6 +184,7 @@ export interface FileRouteTypes {
     | '/_authenticated/agents'
     | '/_authenticated/architecture'
     | '/_authenticated/budget'
+    | '/_authenticated/collaboration'
     | '/_authenticated/command'
     | '/_authenticated/dashboard'
     | '/_authenticated/notifications'
@@ -251,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCommandRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/collaboration': {
+      id: '/_authenticated/collaboration'
+      path: '/collaboration'
+      fullPath: '/collaboration'
+      preLoaderRoute: typeof AuthenticatedCollaborationRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/budget': {
       id: '/_authenticated/budget'
       path: '/budget'
@@ -287,6 +307,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAgentsRoute: typeof AuthenticatedAgentsRoute
   AuthenticatedArchitectureRoute: typeof AuthenticatedArchitectureRoute
   AuthenticatedBudgetRoute: typeof AuthenticatedBudgetRoute
+  AuthenticatedCollaborationRoute: typeof AuthenticatedCollaborationRoute
   AuthenticatedCommandRoute: typeof AuthenticatedCommandRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
@@ -300,6 +321,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAgentsRoute: AuthenticatedAgentsRoute,
   AuthenticatedArchitectureRoute: AuthenticatedArchitectureRoute,
   AuthenticatedBudgetRoute: AuthenticatedBudgetRoute,
+  AuthenticatedCollaborationRoute: AuthenticatedCollaborationRoute,
   AuthenticatedCommandRoute: AuthenticatedCommandRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
