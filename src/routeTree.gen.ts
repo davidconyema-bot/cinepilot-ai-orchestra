@@ -28,6 +28,7 @@ import { Route as ActorActorIndexRouteImport } from './routes/_actor/actor/index
 import { Route as ActorActorScriptsRouteImport } from './routes/_actor/actor/scripts'
 import { Route as ActorActorScheduleRouteImport } from './routes/_actor/actor/schedule'
 import { Route as ActorActorNotificationsRouteImport } from './routes/_actor/actor/notifications'
+import { Route as ActorActorNotesRouteImport } from './routes/_actor/actor/notes'
 import { Route as ActorActorMoviesRouteImport } from './routes/_actor/actor/movies'
 
 const AuthRoute = AuthRouteImport.update({
@@ -126,6 +127,11 @@ const ActorActorNotificationsRoute = ActorActorNotificationsRouteImport.update({
   path: '/actor/notifications',
   getParentRoute: () => ActorRouteRoute,
 } as any)
+const ActorActorNotesRoute = ActorActorNotesRouteImport.update({
+  id: '/actor/notes',
+  path: '/actor/notes',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
 const ActorActorMoviesRoute = ActorActorMoviesRouteImport.update({
   id: '/actor/movies',
   path: '/actor/movies',
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof AuthenticatedReportsRoute
   '/schedule': typeof AuthenticatedScheduleRoute
   '/actor/movies': typeof ActorActorMoviesRoute
+  '/actor/notes': typeof ActorActorNotesRoute
   '/actor/notifications': typeof ActorActorNotificationsRoute
   '/actor/schedule': typeof ActorActorScheduleRoute
   '/actor/scripts': typeof ActorActorScriptsRoute
@@ -167,6 +174,7 @@ export interface FileRoutesByTo {
   '/reports': typeof AuthenticatedReportsRoute
   '/schedule': typeof AuthenticatedScheduleRoute
   '/actor/movies': typeof ActorActorMoviesRoute
+  '/actor/notes': typeof ActorActorNotesRoute
   '/actor/notifications': typeof ActorActorNotificationsRoute
   '/actor/schedule': typeof ActorActorScheduleRoute
   '/actor/scripts': typeof ActorActorScriptsRoute
@@ -190,6 +198,7 @@ export interface FileRoutesById {
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/schedule': typeof AuthenticatedScheduleRoute
   '/_actor/actor/movies': typeof ActorActorMoviesRoute
+  '/_actor/actor/notes': typeof ActorActorNotesRoute
   '/_actor/actor/notifications': typeof ActorActorNotificationsRoute
   '/_actor/actor/schedule': typeof ActorActorScheduleRoute
   '/_actor/actor/scripts': typeof ActorActorScriptsRoute
@@ -212,6 +221,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/schedule'
     | '/actor/movies'
+    | '/actor/notes'
     | '/actor/notifications'
     | '/actor/schedule'
     | '/actor/scripts'
@@ -232,6 +242,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/schedule'
     | '/actor/movies'
+    | '/actor/notes'
     | '/actor/notifications'
     | '/actor/schedule'
     | '/actor/scripts'
@@ -254,6 +265,7 @@ export interface FileRouteTypes {
     | '/_authenticated/reports'
     | '/_authenticated/schedule'
     | '/_actor/actor/movies'
+    | '/_actor/actor/notes'
     | '/_actor/actor/notifications'
     | '/_actor/actor/schedule'
     | '/_actor/actor/scripts'
@@ -402,6 +414,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ActorActorNotificationsRouteImport
       parentRoute: typeof ActorRouteRoute
     }
+    '/_actor/actor/notes': {
+      id: '/_actor/actor/notes'
+      path: '/actor/notes'
+      fullPath: '/actor/notes'
+      preLoaderRoute: typeof ActorActorNotesRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
     '/_actor/actor/movies': {
       id: '/_actor/actor/movies'
       path: '/actor/movies'
@@ -414,6 +433,7 @@ declare module '@tanstack/react-router' {
 
 interface ActorRouteRouteChildren {
   ActorActorMoviesRoute: typeof ActorActorMoviesRoute
+  ActorActorNotesRoute: typeof ActorActorNotesRoute
   ActorActorNotificationsRoute: typeof ActorActorNotificationsRoute
   ActorActorScheduleRoute: typeof ActorActorScheduleRoute
   ActorActorScriptsRoute: typeof ActorActorScriptsRoute
@@ -422,6 +442,7 @@ interface ActorRouteRouteChildren {
 
 const ActorRouteRouteChildren: ActorRouteRouteChildren = {
   ActorActorMoviesRoute: ActorActorMoviesRoute,
+  ActorActorNotesRoute: ActorActorNotesRoute,
   ActorActorNotificationsRoute: ActorActorNotificationsRoute,
   ActorActorScheduleRoute: ActorActorScheduleRoute,
   ActorActorScriptsRoute: ActorActorScriptsRoute,
