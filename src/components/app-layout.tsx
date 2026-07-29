@@ -14,6 +14,7 @@ import {
   Cloud,
   Network,
   Shield,
+  Users,
   LogOut,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
@@ -33,6 +34,7 @@ const nav = [
   { to: "/budget", label: "Budget", icon: Wallet },
   { to: "/reports", label: "Reports", icon: FileText },
   { to: "/architecture", label: "Architecture", icon: Network },
+  { to: "/collaboration", label: "Collaboration", icon: Users },
   { to: "/notifications", label: "Notifications", icon: Bell },
   { to: "/admin", label: "Admin", icon: Shield, producerOnly: true },
 ] as const;
