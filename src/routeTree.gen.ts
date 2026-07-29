@@ -26,6 +26,7 @@ import { Route as AuthenticatedAgentsRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ActorActorIndexRouteImport } from './routes/_actor/actor/index'
 import { Route as ActorActorScriptsRouteImport } from './routes/_actor/actor/scripts'
+import { Route as ActorActorScheduleRouteImport } from './routes/_actor/actor/schedule'
 import { Route as ActorActorMoviesRouteImport } from './routes/_actor/actor/movies'
 
 const AuthRoute = AuthRouteImport.update({
@@ -114,6 +115,11 @@ const ActorActorScriptsRoute = ActorActorScriptsRouteImport.update({
   path: '/actor/scripts',
   getParentRoute: () => ActorRouteRoute,
 } as any)
+const ActorActorScheduleRoute = ActorActorScheduleRouteImport.update({
+  id: '/actor/schedule',
+  path: '/actor/schedule',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
 const ActorActorMoviesRoute = ActorActorMoviesRouteImport.update({
   id: '/actor/movies',
   path: '/actor/movies',
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof AuthenticatedReportsRoute
   '/schedule': typeof AuthenticatedScheduleRoute
   '/actor/movies': typeof ActorActorMoviesRoute
+  '/actor/schedule': typeof ActorActorScheduleRoute
   '/actor/scripts': typeof ActorActorScriptsRoute
   '/actor/': typeof ActorActorIndexRoute
 }
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/reports': typeof AuthenticatedReportsRoute
   '/schedule': typeof AuthenticatedScheduleRoute
   '/actor/movies': typeof ActorActorMoviesRoute
+  '/actor/schedule': typeof ActorActorScheduleRoute
   '/actor/scripts': typeof ActorActorScriptsRoute
   '/actor': typeof ActorActorIndexRoute
 }
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/schedule': typeof AuthenticatedScheduleRoute
   '/_actor/actor/movies': typeof ActorActorMoviesRoute
+  '/_actor/actor/schedule': typeof ActorActorScheduleRoute
   '/_actor/actor/scripts': typeof ActorActorScriptsRoute
   '/_actor/actor/': typeof ActorActorIndexRoute
 }
@@ -194,6 +203,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/schedule'
     | '/actor/movies'
+    | '/actor/schedule'
     | '/actor/scripts'
     | '/actor/'
   fileRoutesByTo: FileRoutesByTo
@@ -212,6 +222,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/schedule'
     | '/actor/movies'
+    | '/actor/schedule'
     | '/actor/scripts'
     | '/actor'
   id:
@@ -232,6 +243,7 @@ export interface FileRouteTypes {
     | '/_authenticated/reports'
     | '/_authenticated/schedule'
     | '/_actor/actor/movies'
+    | '/_actor/actor/schedule'
     | '/_actor/actor/scripts'
     | '/_actor/actor/'
   fileRoutesById: FileRoutesById
@@ -364,6 +376,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ActorActorScriptsRouteImport
       parentRoute: typeof ActorRouteRoute
     }
+    '/_actor/actor/schedule': {
+      id: '/_actor/actor/schedule'
+      path: '/actor/schedule'
+      fullPath: '/actor/schedule'
+      preLoaderRoute: typeof ActorActorScheduleRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
     '/_actor/actor/movies': {
       id: '/_actor/actor/movies'
       path: '/actor/movies'
@@ -376,12 +395,14 @@ declare module '@tanstack/react-router' {
 
 interface ActorRouteRouteChildren {
   ActorActorMoviesRoute: typeof ActorActorMoviesRoute
+  ActorActorScheduleRoute: typeof ActorActorScheduleRoute
   ActorActorScriptsRoute: typeof ActorActorScriptsRoute
   ActorActorIndexRoute: typeof ActorActorIndexRoute
 }
 
 const ActorRouteRouteChildren: ActorRouteRouteChildren = {
   ActorActorMoviesRoute: ActorActorMoviesRoute,
+  ActorActorScheduleRoute: ActorActorScheduleRoute,
   ActorActorScriptsRoute: ActorActorScriptsRoute,
   ActorActorIndexRoute: ActorActorIndexRoute,
 }
