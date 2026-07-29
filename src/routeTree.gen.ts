@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as ActorRouteRouteImport } from './routes/_actor/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedScheduleRouteImport } from './routes/_authenticated/schedule'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
@@ -18,10 +19,21 @@ import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCommandRouteImport } from './routes/_authenticated/command'
+import { Route as AuthenticatedCollaborationRouteImport } from './routes/_authenticated/collaboration'
 import { Route as AuthenticatedBudgetRouteImport } from './routes/_authenticated/budget'
 import { Route as AuthenticatedArchitectureRouteImport } from './routes/_authenticated/architecture'
 import { Route as AuthenticatedAgentsRouteImport } from './routes/_authenticated/agents'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as ActorActorIndexRouteImport } from './routes/_actor/actor/index'
+import { Route as ActorActorSettingsRouteImport } from './routes/_actor/actor/settings'
+import { Route as ActorActorScriptsRouteImport } from './routes/_actor/actor/scripts'
+import { Route as ActorActorScheduleRouteImport } from './routes/_actor/actor/schedule'
+import { Route as ActorActorProfileRouteImport } from './routes/_actor/actor/profile'
+import { Route as ActorActorNotificationsRouteImport } from './routes/_actor/actor/notifications'
+import { Route as ActorActorNotesRouteImport } from './routes/_actor/actor/notes'
+import { Route as ActorActorMoviesRouteImport } from './routes/_actor/actor/movies'
+import { Route as ActorActorMessagesRouteImport } from './routes/_actor/actor/messages'
+import { Route as ActorActorDocumentsRouteImport } from './routes/_actor/actor/documents'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -30,6 +42,10 @@ const AuthRoute = AuthRouteImport.update({
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActorRouteRoute = ActorRouteRouteImport.update({
+  id: '/_actor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -68,6 +84,12 @@ const AuthenticatedCommandRoute = AuthenticatedCommandRouteImport.update({
   path: '/command',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCollaborationRoute =
+  AuthenticatedCollaborationRouteImport.update({
+    id: '/collaboration',
+    path: '/collaboration',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedBudgetRoute = AuthenticatedBudgetRouteImport.update({
   id: '/budget',
   path: '/budget',
@@ -89,6 +111,56 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ActorActorIndexRoute = ActorActorIndexRouteImport.update({
+  id: '/actor/',
+  path: '/actor/',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
+const ActorActorSettingsRoute = ActorActorSettingsRouteImport.update({
+  id: '/actor/settings',
+  path: '/actor/settings',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
+const ActorActorScriptsRoute = ActorActorScriptsRouteImport.update({
+  id: '/actor/scripts',
+  path: '/actor/scripts',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
+const ActorActorScheduleRoute = ActorActorScheduleRouteImport.update({
+  id: '/actor/schedule',
+  path: '/actor/schedule',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
+const ActorActorProfileRoute = ActorActorProfileRouteImport.update({
+  id: '/actor/profile',
+  path: '/actor/profile',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
+const ActorActorNotificationsRoute = ActorActorNotificationsRouteImport.update({
+  id: '/actor/notifications',
+  path: '/actor/notifications',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
+const ActorActorNotesRoute = ActorActorNotesRouteImport.update({
+  id: '/actor/notes',
+  path: '/actor/notes',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
+const ActorActorMoviesRoute = ActorActorMoviesRouteImport.update({
+  id: '/actor/movies',
+  path: '/actor/movies',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
+const ActorActorMessagesRoute = ActorActorMessagesRouteImport.update({
+  id: '/actor/messages',
+  path: '/actor/messages',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
+const ActorActorDocumentsRoute = ActorActorDocumentsRouteImport.update({
+  id: '/actor/documents',
+  path: '/actor/documents',
+  getParentRoute: () => ActorRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -97,12 +169,23 @@ export interface FileRoutesByFullPath {
   '/agents': typeof AuthenticatedAgentsRoute
   '/architecture': typeof AuthenticatedArchitectureRoute
   '/budget': typeof AuthenticatedBudgetRoute
+  '/collaboration': typeof AuthenticatedCollaborationRoute
   '/command': typeof AuthenticatedCommandRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/schedule': typeof AuthenticatedScheduleRoute
+  '/actor/documents': typeof ActorActorDocumentsRoute
+  '/actor/messages': typeof ActorActorMessagesRoute
+  '/actor/movies': typeof ActorActorMoviesRoute
+  '/actor/notes': typeof ActorActorNotesRoute
+  '/actor/notifications': typeof ActorActorNotificationsRoute
+  '/actor/profile': typeof ActorActorProfileRoute
+  '/actor/schedule': typeof ActorActorScheduleRoute
+  '/actor/scripts': typeof ActorActorScriptsRoute
+  '/actor/settings': typeof ActorActorSettingsRoute
+  '/actor/': typeof ActorActorIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -111,28 +194,51 @@ export interface FileRoutesByTo {
   '/agents': typeof AuthenticatedAgentsRoute
   '/architecture': typeof AuthenticatedArchitectureRoute
   '/budget': typeof AuthenticatedBudgetRoute
+  '/collaboration': typeof AuthenticatedCollaborationRoute
   '/command': typeof AuthenticatedCommandRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/schedule': typeof AuthenticatedScheduleRoute
+  '/actor/documents': typeof ActorActorDocumentsRoute
+  '/actor/messages': typeof ActorActorMessagesRoute
+  '/actor/movies': typeof ActorActorMoviesRoute
+  '/actor/notes': typeof ActorActorNotesRoute
+  '/actor/notifications': typeof ActorActorNotificationsRoute
+  '/actor/profile': typeof ActorActorProfileRoute
+  '/actor/schedule': typeof ActorActorScheduleRoute
+  '/actor/scripts': typeof ActorActorScriptsRoute
+  '/actor/settings': typeof ActorActorSettingsRoute
+  '/actor': typeof ActorActorIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_actor': typeof ActorRouteRouteWithChildren
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/agents': typeof AuthenticatedAgentsRoute
   '/_authenticated/architecture': typeof AuthenticatedArchitectureRoute
   '/_authenticated/budget': typeof AuthenticatedBudgetRoute
+  '/_authenticated/collaboration': typeof AuthenticatedCollaborationRoute
   '/_authenticated/command': typeof AuthenticatedCommandRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/schedule': typeof AuthenticatedScheduleRoute
+  '/_actor/actor/documents': typeof ActorActorDocumentsRoute
+  '/_actor/actor/messages': typeof ActorActorMessagesRoute
+  '/_actor/actor/movies': typeof ActorActorMoviesRoute
+  '/_actor/actor/notes': typeof ActorActorNotesRoute
+  '/_actor/actor/notifications': typeof ActorActorNotificationsRoute
+  '/_actor/actor/profile': typeof ActorActorProfileRoute
+  '/_actor/actor/schedule': typeof ActorActorScheduleRoute
+  '/_actor/actor/scripts': typeof ActorActorScriptsRoute
+  '/_actor/actor/settings': typeof ActorActorSettingsRoute
+  '/_actor/actor/': typeof ActorActorIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -143,12 +249,23 @@ export interface FileRouteTypes {
     | '/agents'
     | '/architecture'
     | '/budget'
+    | '/collaboration'
     | '/command'
     | '/dashboard'
     | '/notifications'
     | '/projects'
     | '/reports'
     | '/schedule'
+    | '/actor/documents'
+    | '/actor/messages'
+    | '/actor/movies'
+    | '/actor/notes'
+    | '/actor/notifications'
+    | '/actor/profile'
+    | '/actor/schedule'
+    | '/actor/scripts'
+    | '/actor/settings'
+    | '/actor/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -157,31 +274,55 @@ export interface FileRouteTypes {
     | '/agents'
     | '/architecture'
     | '/budget'
+    | '/collaboration'
     | '/command'
     | '/dashboard'
     | '/notifications'
     | '/projects'
     | '/reports'
     | '/schedule'
+    | '/actor/documents'
+    | '/actor/messages'
+    | '/actor/movies'
+    | '/actor/notes'
+    | '/actor/notifications'
+    | '/actor/profile'
+    | '/actor/schedule'
+    | '/actor/scripts'
+    | '/actor/settings'
+    | '/actor'
   id:
     | '__root__'
     | '/'
+    | '/_actor'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/admin'
     | '/_authenticated/agents'
     | '/_authenticated/architecture'
     | '/_authenticated/budget'
+    | '/_authenticated/collaboration'
     | '/_authenticated/command'
     | '/_authenticated/dashboard'
     | '/_authenticated/notifications'
     | '/_authenticated/projects'
     | '/_authenticated/reports'
     | '/_authenticated/schedule'
+    | '/_actor/actor/documents'
+    | '/_actor/actor/messages'
+    | '/_actor/actor/movies'
+    | '/_actor/actor/notes'
+    | '/_actor/actor/notifications'
+    | '/_actor/actor/profile'
+    | '/_actor/actor/schedule'
+    | '/_actor/actor/scripts'
+    | '/_actor/actor/settings'
+    | '/_actor/actor/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActorRouteRoute: typeof ActorRouteRouteWithChildren
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
 }
@@ -200,6 +341,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_actor': {
+      id: '/_actor'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ActorRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -251,6 +399,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCommandRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/collaboration': {
+      id: '/_authenticated/collaboration'
+      path: '/collaboration'
+      fullPath: '/collaboration'
+      preLoaderRoute: typeof AuthenticatedCollaborationRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/budget': {
       id: '/_authenticated/budget'
       path: '/budget'
@@ -279,14 +434,115 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_actor/actor/': {
+      id: '/_actor/actor/'
+      path: '/actor'
+      fullPath: '/actor/'
+      preLoaderRoute: typeof ActorActorIndexRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
+    '/_actor/actor/settings': {
+      id: '/_actor/actor/settings'
+      path: '/actor/settings'
+      fullPath: '/actor/settings'
+      preLoaderRoute: typeof ActorActorSettingsRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
+    '/_actor/actor/scripts': {
+      id: '/_actor/actor/scripts'
+      path: '/actor/scripts'
+      fullPath: '/actor/scripts'
+      preLoaderRoute: typeof ActorActorScriptsRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
+    '/_actor/actor/schedule': {
+      id: '/_actor/actor/schedule'
+      path: '/actor/schedule'
+      fullPath: '/actor/schedule'
+      preLoaderRoute: typeof ActorActorScheduleRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
+    '/_actor/actor/profile': {
+      id: '/_actor/actor/profile'
+      path: '/actor/profile'
+      fullPath: '/actor/profile'
+      preLoaderRoute: typeof ActorActorProfileRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
+    '/_actor/actor/notifications': {
+      id: '/_actor/actor/notifications'
+      path: '/actor/notifications'
+      fullPath: '/actor/notifications'
+      preLoaderRoute: typeof ActorActorNotificationsRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
+    '/_actor/actor/notes': {
+      id: '/_actor/actor/notes'
+      path: '/actor/notes'
+      fullPath: '/actor/notes'
+      preLoaderRoute: typeof ActorActorNotesRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
+    '/_actor/actor/movies': {
+      id: '/_actor/actor/movies'
+      path: '/actor/movies'
+      fullPath: '/actor/movies'
+      preLoaderRoute: typeof ActorActorMoviesRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
+    '/_actor/actor/messages': {
+      id: '/_actor/actor/messages'
+      path: '/actor/messages'
+      fullPath: '/actor/messages'
+      preLoaderRoute: typeof ActorActorMessagesRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
+    '/_actor/actor/documents': {
+      id: '/_actor/actor/documents'
+      path: '/actor/documents'
+      fullPath: '/actor/documents'
+      preLoaderRoute: typeof ActorActorDocumentsRouteImport
+      parentRoute: typeof ActorRouteRoute
+    }
   }
 }
+
+interface ActorRouteRouteChildren {
+  ActorActorDocumentsRoute: typeof ActorActorDocumentsRoute
+  ActorActorMessagesRoute: typeof ActorActorMessagesRoute
+  ActorActorMoviesRoute: typeof ActorActorMoviesRoute
+  ActorActorNotesRoute: typeof ActorActorNotesRoute
+  ActorActorNotificationsRoute: typeof ActorActorNotificationsRoute
+  ActorActorProfileRoute: typeof ActorActorProfileRoute
+  ActorActorScheduleRoute: typeof ActorActorScheduleRoute
+  ActorActorScriptsRoute: typeof ActorActorScriptsRoute
+  ActorActorSettingsRoute: typeof ActorActorSettingsRoute
+  ActorActorIndexRoute: typeof ActorActorIndexRoute
+}
+
+const ActorRouteRouteChildren: ActorRouteRouteChildren = {
+  ActorActorDocumentsRoute: ActorActorDocumentsRoute,
+  ActorActorMessagesRoute: ActorActorMessagesRoute,
+  ActorActorMoviesRoute: ActorActorMoviesRoute,
+  ActorActorNotesRoute: ActorActorNotesRoute,
+  ActorActorNotificationsRoute: ActorActorNotificationsRoute,
+  ActorActorProfileRoute: ActorActorProfileRoute,
+  ActorActorScheduleRoute: ActorActorScheduleRoute,
+  ActorActorScriptsRoute: ActorActorScriptsRoute,
+  ActorActorSettingsRoute: ActorActorSettingsRoute,
+  ActorActorIndexRoute: ActorActorIndexRoute,
+}
+
+const ActorRouteRouteWithChildren = ActorRouteRoute._addFileChildren(
+  ActorRouteRouteChildren,
+)
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAgentsRoute: typeof AuthenticatedAgentsRoute
   AuthenticatedArchitectureRoute: typeof AuthenticatedArchitectureRoute
   AuthenticatedBudgetRoute: typeof AuthenticatedBudgetRoute
+  AuthenticatedCollaborationRoute: typeof AuthenticatedCollaborationRoute
   AuthenticatedCommandRoute: typeof AuthenticatedCommandRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
@@ -300,6 +556,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAgentsRoute: AuthenticatedAgentsRoute,
   AuthenticatedArchitectureRoute: AuthenticatedArchitectureRoute,
   AuthenticatedBudgetRoute: AuthenticatedBudgetRoute,
+  AuthenticatedCollaborationRoute: AuthenticatedCollaborationRoute,
   AuthenticatedCommandRoute: AuthenticatedCommandRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
@@ -313,6 +570,7 @@ const AuthenticatedRouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActorRouteRoute: ActorRouteRouteWithChildren,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
 }

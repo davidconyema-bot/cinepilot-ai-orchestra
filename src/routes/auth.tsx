@@ -5,6 +5,7 @@ import { Film, Loader2, Mail, Lock, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
+import { ACTOR_EMAIL, ACTOR_PASSWORD } from "@/lib/actor-data";
 
 export const Route = createFileRoute("/auth")({
   component: AuthPage,
@@ -37,7 +38,11 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/dashboard", replace: true });
+      if (data.session) {
+        const dest =
+          data.session.user.email?.toLowerCase() === ACTOR_EMAIL ? "/actor" : "/dashboard";
+        navigate({ to: dest, replace: true });
+      }
     });
   }, [navigate]);
 
@@ -58,10 +63,29 @@ function AuthPage() {
         toast.success("Account created", { description: "You're signed in." });
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
+        if (error) {
+          // Predefined actor account is provisioned on first sign-in.
+          const isActor =
+            email.trim().toLowerCase() === ACTOR_EMAIL && password === ACTOR_PASSWORD;
+          if (!isActor) throw error;
+          const { error: signUpError } = await supabase.auth.signUp({
+            email: ACTOR_EMAIL,
+            password: ACTOR_PASSWORD,
+            options: {
+              emailRedirectTo: `${window.location.origin}/actor`,
+              data: { full_name: "Nusaiba Saudu", job_title: "Lead Actor" },
+            },
+          });
+          if (signUpError) throw signUpError;
+          await supabase.auth.signInWithPassword({
+            email: ACTOR_EMAIL,
+            password: ACTOR_PASSWORD,
+          });
+        }
         toast.success("Welcome back");
       }
-      navigate({ to: "/dashboard", replace: true });
+      const actorLogin = email.trim().toLowerCase() === ACTOR_EMAIL;
+      navigate({ to: actorLogin ? "/actor" : "/dashboard", replace: true });
     } catch (err) {
       const message = err instanceof Error ? err.message : "Authentication failed";
       toast.error(message);
