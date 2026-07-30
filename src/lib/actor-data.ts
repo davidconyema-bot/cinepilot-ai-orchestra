@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export const ACTOR_EMAIL = "nusaibasaudu@gmail.com";
-export const ACTOR_PASSWORD = "12345678";
+export const ACTOR_PASSWORD = "12345678qwerty";
 
 export const actorProfile = {
   name: "Nusaiba Saudu",
