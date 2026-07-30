@@ -25,7 +25,6 @@ import { Route as AuthenticatedArchitectureRouteImport } from './routes/_authent
 import { Route as AuthenticatedAgentsRouteImport } from './routes/_authenticated/agents'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ActorActorIndexRouteImport } from './routes/_actor/actor/index'
-import { Route as ApiPublicTempPwRouteImport } from './routes/api/public/temp-pw'
 import { Route as ActorActorSettingsRouteImport } from './routes/_actor/actor/settings'
 import { Route as ActorActorScriptsRouteImport } from './routes/_actor/actor/scripts'
 import { Route as ActorActorScheduleRouteImport } from './routes/_actor/actor/schedule'
@@ -117,11 +116,6 @@ const ActorActorIndexRoute = ActorActorIndexRouteImport.update({
   path: '/actor/',
   getParentRoute: () => ActorRouteRoute,
 } as any)
-const ApiPublicTempPwRoute = ApiPublicTempPwRouteImport.update({
-  id: '/api/public/temp-pw',
-  path: '/api/public/temp-pw',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ActorActorSettingsRoute = ActorActorSettingsRouteImport.update({
   id: '/actor/settings',
   path: '/actor/settings',
@@ -191,7 +185,6 @@ export interface FileRoutesByFullPath {
   '/actor/schedule': typeof ActorActorScheduleRoute
   '/actor/scripts': typeof ActorActorScriptsRoute
   '/actor/settings': typeof ActorActorSettingsRoute
-  '/api/public/temp-pw': typeof ApiPublicTempPwRoute
   '/actor/': typeof ActorActorIndexRoute
 }
 export interface FileRoutesByTo {
@@ -217,7 +210,6 @@ export interface FileRoutesByTo {
   '/actor/schedule': typeof ActorActorScheduleRoute
   '/actor/scripts': typeof ActorActorScriptsRoute
   '/actor/settings': typeof ActorActorSettingsRoute
-  '/api/public/temp-pw': typeof ApiPublicTempPwRoute
   '/actor': typeof ActorActorIndexRoute
 }
 export interface FileRoutesById {
@@ -246,7 +238,6 @@ export interface FileRoutesById {
   '/_actor/actor/schedule': typeof ActorActorScheduleRoute
   '/_actor/actor/scripts': typeof ActorActorScriptsRoute
   '/_actor/actor/settings': typeof ActorActorSettingsRoute
-  '/api/public/temp-pw': typeof ApiPublicTempPwRoute
   '/_actor/actor/': typeof ActorActorIndexRoute
 }
 export interface FileRouteTypes {
@@ -274,7 +265,6 @@ export interface FileRouteTypes {
     | '/actor/schedule'
     | '/actor/scripts'
     | '/actor/settings'
-    | '/api/public/temp-pw'
     | '/actor/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -300,7 +290,6 @@ export interface FileRouteTypes {
     | '/actor/schedule'
     | '/actor/scripts'
     | '/actor/settings'
-    | '/api/public/temp-pw'
     | '/actor'
   id:
     | '__root__'
@@ -328,7 +317,6 @@ export interface FileRouteTypes {
     | '/_actor/actor/schedule'
     | '/_actor/actor/scripts'
     | '/_actor/actor/settings'
-    | '/api/public/temp-pw'
     | '/_actor/actor/'
   fileRoutesById: FileRoutesById
 }
@@ -337,7 +325,6 @@ export interface RootRouteChildren {
   ActorRouteRoute: typeof ActorRouteRouteWithChildren
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  ApiPublicTempPwRoute: typeof ApiPublicTempPwRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -453,13 +440,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/actor/'
       preLoaderRoute: typeof ActorActorIndexRouteImport
       parentRoute: typeof ActorRouteRoute
-    }
-    '/api/public/temp-pw': {
-      id: '/api/public/temp-pw'
-      path: '/api/public/temp-pw'
-      fullPath: '/api/public/temp-pw'
-      preLoaderRoute: typeof ApiPublicTempPwRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/_actor/actor/settings': {
       id: '/_actor/actor/settings'
@@ -593,7 +573,6 @@ const rootRouteChildren: RootRouteChildren = {
   ActorRouteRoute: ActorRouteRouteWithChildren,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  ApiPublicTempPwRoute: ApiPublicTempPwRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
