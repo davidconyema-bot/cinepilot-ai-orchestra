@@ -120,9 +120,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
       </head>
       <body>
         {children}
@@ -134,7 +135,13 @@ function RootShell({ children }: { children: ReactNode }) {
 
 import { initFirestoreSync } from "@/lib/store";
 import { AuthProvider } from "@/lib/auth";
+import { ThemeProvider, themeBootstrapScript, useTheme } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
+
+function ThemedToaster() {
+  const { theme } = useTheme();
+  return <Toaster theme={theme} position="top-right" />;
+}
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
@@ -155,11 +162,14 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <Outlet />
-      </AuthProvider>
-      <Toaster theme="dark" position="top-right" />
+      <ThemeProvider>
+        <AuthProvider>
+          <Outlet />
+        </AuthProvider>
+        <ThemedToaster />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
+
 
