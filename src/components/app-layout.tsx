@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { CommandDock } from "@/components/command-dock";
+import { ThemeToggle } from "@/components/theme-toggle";
+
 import { Badge } from "@/components/ui/badge";
 import { useAuth, displayName, ROLE_LABELS } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
