@@ -161,7 +161,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
             </button>
 
             <div className="flex items-center gap-2 pl-1">
+              <ThemeToggle />
               <div className="hidden sm:flex flex-col items-end leading-tight">
+
                 <span className="text-xs font-medium">{displayName(profile, user)}</span>
                 <span className="text-[10px] text-muted-foreground">
                   {roles.length ? roles.map((r) => ROLE_LABELS[r]).join(" · ") : "No role"}
