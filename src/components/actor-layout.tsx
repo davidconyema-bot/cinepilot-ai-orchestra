@@ -127,7 +127,9 @@ export function ActorLayout({ children }: { children: ReactNode }) {
               Actor workspace
             </Badge>
             <div className="ml-auto flex items-center gap-2">
+              <ThemeToggle />
               <div className="hidden flex-col items-end leading-tight sm:flex">
+
                 <span className="text-xs font-medium">{actorProfile.name}</span>
                 <span className="text-[10px] text-muted-foreground">{actorProfile.role}</span>
               </div>
