@@ -1,4 +1,4 @@
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
   LayoutDashboard,
@@ -18,7 +18,7 @@ import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-import { supabase } from "@/integrations/supabase/client";
+import { performSignOut } from "@/lib/sign-out";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { actorProfile, useActorStore } from "@/lib/actor-data";
@@ -38,16 +38,12 @@ const nav = [
 
 export function ActorLayout({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const unread = useActorStore((s) => s.notices.filter((n) => n.unread).length);
 
   async function signOut() {
-    await queryClient.cancelQueries();
-    queryClient.clear();
-    await supabase.auth.signOut();
     toast.success("Signed out");
-    navigate({ to: "/auth", replace: true });
+    await performSignOut(queryClient);
   }
 
   const isActive = (to: string, exact?: boolean) =>
