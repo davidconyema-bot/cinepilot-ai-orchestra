@@ -137,6 +137,9 @@ import { initFirestoreSync } from "@/lib/store";
 import { AuthProvider } from "@/lib/auth";
 import { ThemeProvider, themeBootstrapScript, useTheme } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
+import { clearClientSessionData } from "@/lib/sign-out";
+import { toast } from "sonner";
+
 
 function ThemedToaster() {
   const { theme } = useTheme();
