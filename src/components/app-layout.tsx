@@ -1,4 +1,4 @@
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
   LayoutDashboard,
@@ -23,7 +23,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 import { Badge } from "@/components/ui/badge";
 import { useAuth, displayName, ROLE_LABELS } from "@/lib/auth";
-import { supabase } from "@/integrations/supabase/client";
+import { performSignOut } from "@/lib/sign-out";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -45,18 +45,15 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [dockOpen, setDockOpen] = useState(false);
   const { user, profile, roles, hasRole } = useAuth();
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const visibleNav = nav.filter((item) => !("producerOnly" in item) || hasRole("producer"));
 
   async function signOut() {
-    await queryClient.cancelQueries();
-    queryClient.clear();
-    await supabase.auth.signOut();
     toast.success("Signed out");
-    navigate({ to: "/auth", replace: true });
+    await performSignOut(queryClient);
   }
+
 
 
   return (
