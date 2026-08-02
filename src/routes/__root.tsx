@@ -152,13 +152,23 @@ function RootComponent() {
   }, []);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
-      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT" || (event === "TOKEN_REFRESHED" && !session)) {
+        clearClientSessionData();
+        queryClient.clear();
+        if (typeof window !== "undefined" && window.location.pathname !== "/") {
+          toast("Your session has ended", { description: "You've been returned to the homepage." });
+          window.location.replace("/");
+        }
+        return;
+      }
+      if (event !== "SIGNED_IN" && event !== "USER_UPDATED") return;
       router.invalidate();
-      if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
+      queryClient.invalidateQueries();
     });
     return () => sub.subscription.unsubscribe();
   }, [router, queryClient]);
+
 
   return (
     <QueryClientProvider client={queryClient}>
