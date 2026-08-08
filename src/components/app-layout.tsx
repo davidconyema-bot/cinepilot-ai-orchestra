@@ -16,6 +16,7 @@ import {
   Shield,
   Users,
   LogOut,
+  Wrench,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { CommandDock } from "@/components/command-dock";
@@ -35,6 +36,7 @@ const nav = [
   { to: "/schedule", label: "Schedule", icon: CalendarDays },
   { to: "/budget", label: "Budget", icon: Wallet },
   { to: "/reports", label: "Reports", icon: FileText },
+  { to: "/production-tools", label: "Production Tools", icon: Wrench },
   { to: "/architecture", label: "Architecture", icon: Network },
   { to: "/collaboration", label: "Collaboration", icon: Users },
   { to: "/notifications", label: "Notifications", icon: Bell },

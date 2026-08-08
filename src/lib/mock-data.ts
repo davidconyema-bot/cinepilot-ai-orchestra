@@ -1,3 +1,5 @@
+import replitLogo from "@/assets/logos/replit.svg";
+
 // Central mock data for CinePilot AI - placeholder for future Firestore integration
 export type AgentStatus = "active" | "idle" | "thinking" | "error";
 
@@ -13,6 +15,10 @@ export interface Agent {
   progress: number;
   tools: string[];
   color: string;
+  /** Optional partner logo shown instead of the emoji. */
+  logo?: string;
+  provider?: string;
+  technology?: string;
 }
 
 export const agents: Agent[] = [
@@ -132,6 +138,34 @@ export const agents: Agent[] = [
     progress: 78,
     tools: ["weather_api", "conflict_detect", "budget_watch"],
     color: "oklch(0.68 0.22 25)",
+  },
+  {
+    id: "replit",
+    name: "Replit Production Tools Agent",
+    role: "Production Utility Builder",
+    emoji: "🛠️",
+    logo: replitLogo,
+    provider: "Replit",
+    technology: "Replit Agent",
+    status: "idle",
+    confidence: 93,
+    currentTask:
+      "Builds lightweight production utilities for crews, departments and production teams using Replit Agent.",
+    lastAction: "Standing by for a production utility request",
+    progress: 0,
+    tools: [
+      "crew_check_in",
+      "location_scouting",
+      "props_inventory",
+      "costume_tracking",
+      "equipment_checkout",
+      "crew_availability",
+      "production_feedback",
+      "call_sheet_portal",
+      "permission_tracker",
+      "department_dashboard",
+    ],
+    color: "oklch(0.70 0.19 45)",
   },
 ];
 

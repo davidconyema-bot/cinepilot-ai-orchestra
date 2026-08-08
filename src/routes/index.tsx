@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Film,
   Bot,
@@ -22,6 +22,7 @@ import ibmLogo from "@/assets/logos/ibm.svg";
 import grafanaLogo from "@/assets/logos/grafana.svg";
 import clickhouseLogo from "@/assets/logos/clickhouse.svg";
 import parallelLogo from "@/assets/logos/parallel.svg";
+import replitLogo from "@/assets/logos/replit.svg";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
@@ -168,6 +169,27 @@ const partners = [
     products: ["Parallel Runtime"],
     body: "Parallel accelerates multi-agent execution so screenplay analysis, scheduling and budgeting happen simultaneously.",
   },
+  {
+    name: "Replit",
+    logo: replitLogo,
+    badge: "AI Development & Production Tools",
+    products: ["Replit Agent"],
+    body: "Replit Agent helps CinePilot create lightweight production utilities for crews and departments, turning natural-language production requests into practical workflow tools.",
+    details: {
+      technology: "Replit Agent",
+      role: "Production Utility Builder",
+      usage:
+        "CinePilot uses Replit Agent to create lightweight tools that solve specific operational problems during film production.",
+      examples: [
+        "Crew check-in",
+        "Props tracking",
+        "Equipment checkout",
+        "Location scouting",
+        "Crew availability",
+        "Call-time confirmation",
+      ],
+    },
+  },
 ];
 
 /* Lightweight cinematic background: drifting agent nodes, workflow lines and floating cards. */
@@ -243,6 +265,7 @@ function HeroBackdrop() {
 
 function LandingPage() {
   const navigate = useNavigate();
+  const [openPartner, setOpenPartner] = useState<string | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -340,6 +363,7 @@ function LandingPage() {
             {partners.map((p, i) => (
               <motion.article
                 key={p.name}
+                onClick={() => "details" in p && setOpenPartner(openPartner === p.name ? null : p.name)}
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
@@ -371,6 +395,32 @@ function LandingPage() {
                     </span>
                   ))}
                 </div>
+                {"details" in p && p.details && (
+                  <>
+                    <button
+                      type="button"
+                      className="mt-3 self-start text-[11px] uppercase tracking-widest text-primary"
+                    >
+                      {openPartner === p.name ? "Hide details" : "View details"}
+                    </button>
+                    {openPartner === p.name && (
+                      <div className="mt-3 rounded-xl border border-border/60 bg-white/5 p-3 text-sm">
+                        <div className="font-display font-semibold">{p.name}</div>
+                        <div className="text-xs text-primary">{p.details.technology}</div>
+                        <div className="mt-2 text-xs text-muted-foreground">
+                          <span className="text-foreground/80">Role in CinePilot:</span>{" "}
+                          {p.details.role}
+                        </div>
+                        <p className="mt-2 text-xs text-muted-foreground">{p.details.usage}</p>
+                        <ul className="mt-2 space-y-0.5 text-xs text-muted-foreground">
+                          {p.details.examples.map((e) => (
+                            <li key={e}>• {e}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </>
+                )}
               </motion.article>
             ))}
           </div>

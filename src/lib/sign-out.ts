@@ -5,7 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 const PRESERVED_KEYS = ["cinepilot-theme", "cinepilot-lang"];
 
 /** Persisted app/session state that must be wiped on logout. */
-const WORKSPACE_KEYS = ["cinepilot-store-v1", "cinepilot-collab", "cinepilot-actor"];
+const WORKSPACE_KEYS = ["cinepilot-store-v1", "cinepilot-collab", "cinepilot-actor",
+  "cinepilot-production-tools"];
 
 export function clearClientSessionData() {
   if (typeof window === "undefined") return;

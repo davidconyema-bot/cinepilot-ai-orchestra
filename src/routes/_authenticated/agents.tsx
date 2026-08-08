@@ -86,11 +86,20 @@ function AgentCenter() {
                       background: `color-mix(in oklab, ${a.color} 20%, transparent)`,
                     }}
                   >
-                    {a.emoji}
+                    {a.logo ? (
+                      <img src={a.logo} alt={`${a.provider ?? a.name} logo`} className="h-6 w-6" />
+                    ) : (
+                      a.emoji
+                    )}
                   </motion.div>
                   <div>
                     <div className="font-display font-semibold">{a.name}</div>
                     <div className="text-xs text-muted-foreground">{a.role}</div>
+                    {a.provider && (
+                      <div className="mt-0.5 text-[10px] uppercase tracking-widest text-primary">
+                        Provider: {a.provider} · {a.technology}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <Badge variant="outline" className={statusStyle[status]}>
