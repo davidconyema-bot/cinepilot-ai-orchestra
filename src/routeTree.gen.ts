@@ -18,6 +18,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedScheduleRouteImport } from './routes/_authenticated/schedule'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
+import { Route as AuthenticatedProductionToolsRouteImport } from './routes/_authenticated/production-tools'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCommandRouteImport } from './routes/_authenticated/command'
@@ -80,6 +81,12 @@ const AuthenticatedProjectsRoute = AuthenticatedProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedProductionToolsRoute =
+  AuthenticatedProductionToolsRouteImport.update({
+    id: '/production-tools',
+    path: '/production-tools',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedNotificationsRoute =
   AuthenticatedNotificationsRouteImport.update({
     id: '/notifications',
@@ -187,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/command': typeof AuthenticatedCommandRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/production-tools': typeof AuthenticatedProductionToolsRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/schedule': typeof AuthenticatedScheduleRoute
@@ -214,6 +222,7 @@ export interface FileRoutesByTo {
   '/command': typeof AuthenticatedCommandRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/production-tools': typeof AuthenticatedProductionToolsRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/schedule': typeof AuthenticatedScheduleRoute
@@ -244,6 +253,7 @@ export interface FileRoutesById {
   '/_authenticated/command': typeof AuthenticatedCommandRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/production-tools': typeof AuthenticatedProductionToolsRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/schedule': typeof AuthenticatedScheduleRoute
@@ -273,6 +283,7 @@ export interface FileRouteTypes {
     | '/command'
     | '/dashboard'
     | '/notifications'
+    | '/production-tools'
     | '/projects'
     | '/reports'
     | '/schedule'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/command'
     | '/dashboard'
     | '/notifications'
+    | '/production-tools'
     | '/projects'
     | '/reports'
     | '/schedule'
@@ -329,6 +341,7 @@ export interface FileRouteTypes {
     | '/_authenticated/command'
     | '/_authenticated/dashboard'
     | '/_authenticated/notifications'
+    | '/_authenticated/production-tools'
     | '/_authenticated/projects'
     | '/_authenticated/reports'
     | '/_authenticated/schedule'
@@ -416,6 +429,13 @@ declare module '@tanstack/react-router' {
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof AuthenticatedProjectsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/production-tools': {
+      id: '/_authenticated/production-tools'
+      path: '/production-tools'
+      fullPath: '/production-tools'
+      preLoaderRoute: typeof AuthenticatedProductionToolsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/notifications': {
@@ -586,6 +606,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCommandRoute: typeof AuthenticatedCommandRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedProductionToolsRoute: typeof AuthenticatedProductionToolsRoute
   AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedScheduleRoute: typeof AuthenticatedScheduleRoute
@@ -600,6 +621,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCommandRoute: AuthenticatedCommandRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedProductionToolsRoute: AuthenticatedProductionToolsRoute,
   AuthenticatedProjectsRoute: AuthenticatedProjectsRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedScheduleRoute: AuthenticatedScheduleRoute,
@@ -619,13 +641,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
