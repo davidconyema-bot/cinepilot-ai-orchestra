@@ -6,6 +6,15 @@ import { PageHeader, SectionCard } from "@/components/section-card";
 import { agents } from "@/lib/mock-data";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
+import replitLogo from "@/assets/logos/replit.svg";
+import { useStore } from "@/lib/store";
+import { useToolsStore } from "@/lib/tools-store";
+import { trackEvent } from "@/services/analytics";
+import {
+  buildProductionContext,
+  detectProductionTool,
+  requestProductionTool,
+} from "@/services/replitAgentService";
 
 export const Route = createFileRoute("/_authenticated/command")({
   component: CommandCenter,
@@ -24,12 +33,17 @@ const suggestions = [
   "Find scheduling conflicts.",
   "Optimize production costs.",
   "Draft a shot list for the rooftop chase.",
+  "Create a crew check-in tool.",
+  "Build a props tracker.",
+  "Create a location scouting form.",
+  "Generate a call-time confirmation portal.",
 ];
 
 interface Msg {
   role: "user" | "producer";
   text: string;
   chain?: string[];
+  replit?: boolean;
 }
 
 function CommandCenter() {
@@ -41,12 +55,73 @@ function CommandCenter() {
     },
   ]);
   const [running, setRunning] = useState<string[]>([]);
+  const productions = useStore((s) => s.productions);
+  const shootDays = useStore((s) => s.shootDays);
+  const addAgentLog = useStore((s) => s.addAgentLog);
+  const addTool = useToolsStore((s) => s.addTool);
+
+  async function delegateToReplit(text: string) {
+    const blueprint = detectProductionTool(text)!;
+    setRunning(["producer"]);
+    await new Promise((r) => setTimeout(r, 500));
+    setRunning(["producer", "replit"]);
+    addAgentLog({
+      agent: "Producer Agent",
+      action: `Delegated "${blueprint.toolName}" to the Replit Production Tools Agent`,
+      status: "running",
+    });
+    const started = Date.now();
+    const production = productions[0];
+    const context = buildProductionContext(production, shootDays[0] ?? null);
+    const result = await requestProductionTool({ ...blueprint, context });
+    addTool({
+      name: blueprint.toolName,
+      toolType: blueprint.toolType,
+      department: blueprint.department,
+      production: context.production,
+      purpose: blueprint.purpose,
+      status: result.status,
+      url: result.url,
+      message: result.message,
+    });
+    addAgentLog({
+      agent: "Replit Agent",
+      action: `${result.ok ? "Production tool created" : "Production tool request failed"} — ${blueprint.toolName} (${context.production} · ${blueprint.department})`,
+      status: result.ok ? "completed" : "failed",
+    });
+    trackEvent("replit_production_tool", {
+      tool: blueprint.toolName,
+      toolType: blueprint.toolType,
+      department: blueprint.department,
+      production: context.production,
+      status: result.status,
+      durationMs: Date.now() - started,
+      error: result.ok ? undefined : result.message,
+    });
+    setRunning([]);
+    setMessages((m) => [
+      ...m,
+      {
+        role: "producer",
+        text: result.ok
+          ? `Production Tool Created — ${blueprint.toolName} · Department: ${blueprint.department} · Purpose: ${blueprint.purpose} · Created by Replit Production Tools Agent · Status: ${result.status}. See Production Tools to open it.`
+          : `Replit Production Tools is currently unavailable, so no tool was deployed. ${result.message} Everything else in CinePilot is still available.`,
+        replit: true,
+      },
+    ]);
+    if (result.ok) toast.success("Production tool created", { description: result.message });
+    else toast.error("Replit Production Tools is currently unavailable", { description: result.message });
+  }
 
   async function submit(text: string) {
     if (!text.trim()) return;
     setQ("");
     setMessages((m) => [...m, { role: "user", text }]);
     setRunning([]);
+    if (detectProductionTool(text)) {
+      await delegateToReplit(text);
+      return;
+    }
     const chain = ["producer", "schedule", "budget", "risk"];
     for (const id of chain) {
       await new Promise((r) => setTimeout(r, 550));
@@ -100,6 +175,12 @@ function CommandCenter() {
                     </div>
                   )}
                   <div>{m.text}</div>
+                  {m.replit && (
+                    <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-white/5 px-2 py-0.5 text-[10px] text-muted-foreground">
+                      <img src={replitLogo} alt="Replit logo" className="h-3 w-3" />
+                      Built with Replit Agent
+                    </div>
+                  )}
                   {m.chain && (
                     <div className="mt-2 flex flex-wrap items-center gap-1.5">
                       {m.chain.map((id, j) => {
