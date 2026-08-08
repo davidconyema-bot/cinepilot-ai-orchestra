@@ -1,336 +1,73 @@
-# CinePilot AI Command
+CinePilot AI
 
-Build a production-ready AI-powered web application called CinePilot AI.
+Your entire production, run by AI agents.
 
-CinePilot AI is an autonomous multi-agent production assistant designed for filmmakers, studios, independent creators, production managers, and film crews.
+CinePilot AI is an AI-powered multi-agent production management platform for filmmakers, producers, directors, production managers, and film crews.
 
-The goal is to reduce production chaos by allowing specialized AI agents to work together autonomously instead of relying on a single chatbot.
+Instead of treating AI as a single chatbot, CinePilot uses specialized production agents to turn a screenplay into structured production intelligence: scenes, characters, locations, scheduling requirements, budgets, risks, reports, and production workflows.
 
-The application should look like a premium SaaS product inspired by Linear, Notion, Vercel, Arc Browser, and Framer.
+Project Links
 
-Use a dark cinematic theme with glassmorphism, subtle gradients, smooth Framer Motion animations, rounded components, professional typography, and responsive layouts.
+Hosted application: https://cinepilot-ai-orchestra.lovable.app
 
-Technology Stack
+Source repository: https://github.com/davidconyema-bot/cinepilot-ai-orchestra
 
-Build using:
+Demo video: Add public YouTube/Vimeo URL before submission
 
- React
+Core Workflow
 
- TypeScript
+Create Production
+       ↓
+Upload Screenplay
+       ↓
+Gemini screenplay analysis
+       ↓
+Producer Agent
+       ↓
+Specialized production agents
+       ├── Script Analyst
+       ├── Scheduling
+       ├── Budget
+       ├── Shot List
+       ├── Costume
+       ├── Props
+       ├── Location
+       └── Risk Analysis
+       ↓
+Production workspace
+       ├── Schedule
+       ├── Budget
+       ├── Reports
+       ├── Analytics
+       └── AI Command Center
 
- Tailwind CSS
+Why CinePilot?
 
- shadcn/ui
+Film production is highly collaborative, but important information is often spread across scripts, spreadsheets, schedules, messages, and separate production tools.
 
- Framer Motion
+CinePilot brings this workflow into one production command center and uses AI agents to help the production team reason about the same underlying production context.
 
- React Router
+Features
 
- Recharts
+Production Workspace
 
- React Hook Form
+Users can create their own productions instead of being locked to a predefined project.
 
- Lucide Icons
+A production can contain:
 
-Structure the project as if it will be deployed to Google Cloud.
+Screenplays
 
-Include placeholder service layers and API hooks that can later connect to:
+Scenes
 
- Vertex AI (Gemini)
+Characters
 
- Cloud Storage
-
- Firestore
-
- Cloud Functions
-
- Cloud Run
-
-Organize the code cleanly with reusable components.
-
-Dashboard
-
-Create a modern executive dashboard showing:
-
- Production Progress
-
- Active AI Agents
-
- Budget Usage
-
- Upcoming Shoot Days
-
- Crew Availability
-
- Production Timeline
-
- Script Revision Status
-
- Risk Alerts
-
-Include animated statistic cards.
-
-Include charts for:
-
- Budget allocation
-
- Production progress
-
- Shooting completion
-
- Daily crew utilization
-
-Projects Page
-
-Allow users to:
-
- Create productions
-
- Upload screenplays (PDF, DOCX, TXT)
-
- View screenplay metadata
-
- Track revisions
-
- Assign crew members
-
- Upload production assets
-
-Include drag-and-drop upload.
-
-Display screenplay parsing status.
-
-Add placeholder integration labels:
-
-Google Cloud Storage Upload
-
-Vertex AI Script Analysis
-
-Multi-Agent Center
-
-Create an AI Operations Center displaying autonomous agents.
-
-Every agent should have:
-
- Live status
-
- Confidence score
-
- Current task
-
- Last completed action
-
- Progress indicator
-
- Tool usage history
-
-Agents:
-
-🎬 Producer Agent
-
-Orchestrates every task.
-
-✍️ Script Analyst Agent
-
-Breaks screenplay into scenes, characters, dialogue, locations and production requirements.
-
-📅 Scheduling Agent
-
-Generates optimal shooting schedules while minimizing location changes and actor conflicts.
-
-💰 Budget Agent
-
-Estimates production costs and suggests cheaper alternatives.
-
-🎥 Shot List Agent
-
-Creates camera setups and shot suggestions.
-
-👕 Costume Agent
-
-Identifies wardrobe requirements across scenes.
-
-📦 Props Agent
-
-Generates prop inventory.
-
-📍 Location Agent
-
-Organizes filming locations and travel logistics.
-
-⚠️ Risk Analysis Agent
-
-Detects scheduling conflicts, missing resources, weather risks and budget overruns.
-
-Every agent should appear autonomous.
-
-AI Command Center
-
-Add a floating AI assistant dock.
-
-Users can type:
-
-"Move Scene 12 to Friday."
-
-"Estimate the cost of adding another location."
-
-"Generate tomorrow's call sheet."
-
-"Find scheduling conflicts."
-
-"Optimize production costs."
-
-The Producer Agent should delegate tasks visually to specialized agents.
-
-Show animated workflow connections between agents.
-
-Schedule
-
-Create an interactive calendar.
-
-Display:
-
- Shoot days
-
- Scene numbers
-
- Actors
-
- Crew
-
- Equipment
-
- Weather placeholder
-
- Locations
-
- Estimated duration
-
-Include drag-and-drop scheduling.
-
-Show conflicts visually.
-
-Budget
-
-Build an analytics dashboard.
-
-Include:
-
- Pie charts
-
- Spending trends
-
- Budget forecast
-
- Cost breakdown
-
-Categories:
-
- Equipment
-
- Talent
-
- Locations
-
- Catering
-
- Transportation
-
- Insurance
-
- Marketing
-
- Contingency
-
-Include AI recommendations for reducing costs.
-
-Reports
-
-Automatically generate:
-
- Scene Breakdown
-
- Shooting Order
-
- Daily Call Sheet
-
- Crew Report
-
- Budget Report
-
- Production Summary
-
- Risk Assessment
-
-Include Export buttons for:
-
- PDF
-
- CSV
-
- JSON
-
-Notifications
-
-Create a notification center.
-
-Show:
-
- Script updates
-
- Budget warnings
-
- Weather alerts
-
- Missing props
-
- Crew conflicts
-
- Agent completed tasks
-
-Google Cloud Integration Placeholders
-
-Structure the application so it can easily connect to Google Cloud services.
-
-Include service folders and placeholder API calls for:
-
-Vertex AI
-
- Screenplay understanding
-
- Scene analysis
-
- Budget reasoning
-
- Schedule optimization
-
- Report generation
-
-Cloud Storage
-
-Store:
-
- Scripts
-
- Images
-
- Production documents
-
- Call sheets
-
- Reports
-
-Firestore
-
-Collections:
-
-Productions
-
-Scripts
+Locations
 
 Crew
 
-AI Agent Logs
+Props
+
+Costumes
 
 Schedules
 
@@ -340,81 +77,409 @@ Reports
 
 Notifications
 
-Cloud Functions
+AI agent activity
 
-Trigger when:
+AI Operations Center
 
- Script uploaded
+CinePilot includes specialized agents including:
 
- Schedule updated
+Producer Agent — coordinates production tasks
 
- Budget changed
+Script Analyst Agent — extracts scenes, characters, dialogue, locations, and requirements
 
- Report generated
+Scheduling Agent — helps optimize shooting schedules
+
+Budget Agent — analyzes production costs
+
+Shot List Agent — creates shot suggestions
+
+Costume Agent — identifies wardrobe requirements
+
+Props Agent — manages prop requirements
+
+Location Agent — organizes locations and logistics
+
+Risk Analysis Agent — identifies conflicts, resource gaps, and potential risks
+
+The current application structure and agent definitions are present in the source repository.
+
+AI Command Center
+
+The interface is designed around production commands such as:
+
+"Find scheduling conflicts."
+
+"Optimize production costs."
+
+"Generate tomorrow's call sheet."
+
+"Estimate the cost of adding another location."
+
+"Move Scene 12 to Friday."
+
+Schedule
+
+The production schedule provides:
+
+Shoot days
+
+Scene numbers
+
+Actors
+
+Crew
+
+Equipment
+
+Locations
+
+Estimated duration
+
+Conflict visualization
+
+Budget
+
+The budget workspace includes:
+
+Cost breakdowns
+
+Spending trends
+
+Budget forecasts
+
+Budget allocation
+
+AI cost recommendations
+
+Reports
+
+CinePilot is designed to generate:
+
+Scene Breakdown
+
+Shooting Order
+
+Daily Call Sheet
+
+Crew Report
+
+Budget Report
+
+Production Summary
+
+Risk Assessment
+
+Google Cloud Architecture
+
+Google Cloud is the AI and agent foundation of CinePilot.
+
+The target production architecture is:
+
+CinePilot Web App
+       ↓
+Cloud Run API
+       ↓
+Vertex AI / Gemini
+       ↓
+Production Agent
+       ↓
+Specialized Agents
+       ↓
+Production data + analytics
+
+Google Cloud services used by the final judging build:
+
+Google Cloud product
+
+Role
+
+Vertex AI / Gemini
+
+Screenplay reasoning and production intelligence
+
+Vertex AI Agent Builder / Agent Engine
+
+Agent orchestration and runtime
 
 Cloud Run
 
-Prepare frontend/backend architecture suitable for deployment.
+Secure backend/API runtime
 
-Multi-Agent Architecture
+Cloud Storage
 
-Design the interface assuming compatibility with:
+Screenplays and production assets
 
- LangGraph
+Firestore
 
- Microsoft AutoGen
+Production state and agent activity
 
- CrewAI
+The repository originally contained Google Cloud service placeholders. The judging build must replace those mock implementations with real runtime calls before submission.
 
-The Producer Agent should orchestrate all specialist agents through a visual workflow.
+Partner Technology
 
-Include an Agent Activity Timeline showing which agent executed which task and when.
+Replit
 
-UI Quality
+Partner track: Replit
 
-The application should feel like a polished enterprise SaaS platform rather than a hackathon prototype.
+CinePilot integrates Replit Agent / Replit Apps as a production-utility layer.
 
-Include:
+The intended workflow is:
 
- Skeleton loading states
+CinePilot Production
+       ↓
+Producer Agent identifies a useful production utility
+       ↓
+Replit-powered utility
+       ↓
+Crew / department uses the utility
+       ↓
+Result is returned to CinePilot
 
- Empty states
+Example utilities include:
 
- Toast notifications
+Crew check-in
 
- Smooth page transitions
+Props inventory
 
- Responsive mobile layouts
+Costume tracking
 
- Accessible components
+Equipment checkout
 
- Professional spacing
+Location scouting forms
 
- Consistent typography
+Crew availability
 
- Modern dashboard aesthetics
+Call-sheet portals
 
-Build every screen as production-ready with reusable components and clear separation of UI, services, and data layers.
+The repository already contains a Replit service layer and a Replit Agent definition. The final judging version must connect that layer to a real, documented Replit workflow and demonstrate a live call during the demo rather than presenting Replit only as a label.
 
-This project was built with [Lovable](https://lovable.dev).
+Other Technologies
 
-**Live app**: https://cinepilot-ai-orchestra.lovable.app
+React
 
-## Build with Lovable
+TypeScript
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/6998b496-0653-469f-ba5a-670808af38a0).
+Tailwind CSS
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+shadcn/ui
 
-## Development
+Framer Motion
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+React Router / TanStack Router
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+Recharts
+
+React Hook Form
+
+Lucide Icons
+
+Supabase for the existing application authentication/data layer
+
+Google Identity Services for Google sign-in
+
+LangGraph-compatible multi-agent architecture
+
+Lovable for rapid application development
+
+GitHub for source control
+
+Repository Structure
+
+Important existing areas include:
+
+src/
+├── integrations/
+├── lib/
+├── routes/
+├── services/
+├── components/
+└── ...
+
+src/services/
+├── analytics.ts
+├── gcp.ts
+└── replitAgentService.ts
+
+src/lib/
+├── replit.functions.ts
+└── ...
+
+supabase/
+...
+
+The repository currently contains a gcp.ts service layer and a Replit service layer. Before judging, the Google Cloud functions must perform real calls rather than returning mock values.
+
+Authentication
+
+The public homepage is the default entry point.
+
+/
+ ↓
+/auth
+ ↓
+/workspace
+
+Protected application areas require authentication.
+
+Google sign-in uses Google Identity Services.
+
+Signing out returns the user to the public homepage rather than the authentication page.
+
+Local Development
+
+Requirements
+
+Node.js
+
+npm
+
+Google Cloud project for the judging build
+
+Replit account/credentials if the Replit integration is enabled
+
+Supabase configuration for the existing application authentication/data layer
+
+Install
+
+git clone https://github.com/davidconyema-bot/cinepilot-ai-orchestra.git
+cd cinepilot-ai-orchestra
+npm install
+
+Environment variables
+
+Create a local .env file from .env.example.
+
+Never commit .env.
+
+Example:
+
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+
+GOOGLE_CLOUD_PROJECT=your_google_cloud_project
+GOOGLE_CLOUD_LOCATION=us-central1
+
+CINEPILOT_AGENT_ENGINE_ID=your_agent_engine_id
+CINEPILOT_API_URL=your_cloud_run_api_url
+
+REPLIT_APP_URL=your_published_replit_app_url
+
+Server-side credentials must be stored in the deployment's secret manager/environment configuration and must never be exposed to browser code.
+
+Run
+
 npm run dev
-```
+
+Build:
+
+npm run build
+
+How the Google Cloud Integration Is Verified
+
+The final judging build must demonstrate a real runtime path:
+
+Screenplay uploaded
+       ↓
+CinePilot backend
+       ↓
+Cloud Run
+       ↓
+Vertex AI / Gemini
+       ↓
+Structured screenplay analysis
+       ↓
+Production agents
+       ↓
+Dashboard updated
+
+A successful test must show that the result comes from Gemini rather than from hardcoded/mock data.
+
+For example, the previous src/services/gcp.ts implementation returned fixed values such as 142 scenes, 18 characters, and 9 locations. Those mock values must be removed from the judging path.
+
+How the Partner Integration Is Verified
+
+The final Replit judging build must demonstrate:
+
+CinePilot
+   ↓
+Replit integration
+   ↓
+Real Replit-powered production utility
+   ↓
+Returned result/link/status
+   ↓
+CinePilot workspace
+
+The integration must use a documented Replit mechanism and real credentials/configuration where required.
+
+Do not invent an undocumented Replit Agent endpoint or fake a successful deployment.
+
+Security
+
+Never commit:
+
+API keys
+
+Service-account private keys
+
+.env
+
+OAuth client secrets
+
+Replit secrets
+
+Supabase service-role keys
+
+Use environment variables or a secret manager for credentials.
+
+Hackathon Judging Checklist
+
+Before submitting CinePilot, verify all of the following:
+
+Hosted application is publicly accessible
+
+Homepage loads first
+
+Google sign-in works
+
+Users can create their own production
+
+Users can upload a screenplay
+
+Gemini performs a real screenplay-analysis call
+
+Google Cloud agent runtime performs a real agent call
+
+Cloud Run backend is reachable from the hosted application
+
+Production data persists
+
+Replit partner integration performs a real runtime action
+
+No mock Google Cloud call is used in the judging path
+
+No fake partner integration is used
+
+.env is removed from the public repository
+
+.env.example is included
+
+MIT LICENSE file is present
+
+Repository is public
+
+README contains setup instructions
+
+README contains architecture and integration instructions
+
+3-minute demo video is public and in English
+
+Devpost hosted-project URL is correct
+
+Devpost repository URL is correct
+
+Correct partner track is selected
+
+License
+
+This project is released under the MIT License. See LICENSE.
