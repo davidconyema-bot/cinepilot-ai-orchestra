@@ -8,7 +8,7 @@ Instead of treating AI as a single chatbot, CinePilot uses specialized productio
 
 Project Links
 
-Hosted application: https://cinepilot-ai-orchestra.lovable.app
+Hosted application: https://cinepilot-ai-command.lovable.app
 
 Source repository: https://github.com/davidconyema-bot/cinepilot-ai-orchestra
 
