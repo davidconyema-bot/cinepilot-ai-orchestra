@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Film,
   Bot,
@@ -265,6 +265,7 @@ function HeroBackdrop() {
 
 function LandingPage() {
   const navigate = useNavigate();
+  const [openPartner, setOpenPartner] = useState<string | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
